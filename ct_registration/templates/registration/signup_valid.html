@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+
+{% block content_body %}
+<div class="row">
+    <div  class="col-md-12">
+        <h1>Verification successfull.</h1>
+        <p>Verification of your email was successfull. You are now logged in.</p>
+    </div>
+</div>
+<p>If you have any trouble setting up your account, contact us at  <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a>.</p>
+{% endblock %}

@@ -1,12 +1,8 @@
 import os
-from ct_registration.account_settings import *
+from .account_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'change+this'
@@ -14,8 +10,10 @@ SECRET_KEY = 'change+this'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Allowed hosts
 ALLOWED_HOSTS = []
 
+# Site ID
 SITE_ID = 1
 
 
@@ -24,16 +22,15 @@ SITE_ID = 1
 INSTALLED_APPS = [
     'apps.basic',
     'apps.forms',
+    'dynamic_preferences',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
-    'dynamic_preferences',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account',
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -44,8 +41,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "account.middleware.LocaleMiddleware",
-    "account.middleware.TimezoneMiddleware",
 ]
 
 ROOT_URLCONF = 'ct_registration.urls'
@@ -62,7 +57,6 @@ TEMPLATES = [
                 'dynamic_preferences.processors.global_preferences',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'account.context_processors.account',
             ],
         },
     },
@@ -90,10 +84,10 @@ DATABASES = {
 
 # Authentication backends
 # https://docs.djangoproject.com/en/2.2/ref/settings/#authentication-backends
-AUTHENTICATION_BACKENDS = [
-    'account.auth_backends.EmailAuthenticationBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#     # 'account.auth_backends.EmailAuthenticationBackend',
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
 
 
 # Password validation
@@ -141,6 +135,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 LOGGING = {
@@ -197,3 +193,15 @@ LOGGING = {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+LOGIN_REDIRECT_URL = '/'
