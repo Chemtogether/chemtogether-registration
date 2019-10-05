@@ -23,6 +23,8 @@ from . import views
 urlpatterns = [
     path('', include('apps.basic.urls', namespace='basic')),
     path('admin/', admin.site.urls),
+    url(r"^account/login/$", views.LoginView.as_view(), name="account_login"),
+    url(r"^account/signup/$", views.SignupView.as_view(), name="account_signup"),
     url(r"^account/", include("account.urls")),
 ]
 

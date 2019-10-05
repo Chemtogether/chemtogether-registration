@@ -1,5 +1,6 @@
 Django==2.2.5
 django-appconf==1.0.3
+django-crispy-forms==1.7.2
 django-dynamic-preferences==1.7.1
 django-user-accounts==2.1.0
 persisting-theory==0.2.1
