@@ -20,6 +20,7 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.accounts',
     'apps.basic',
     'apps.forms',
     'dynamic_preferences',

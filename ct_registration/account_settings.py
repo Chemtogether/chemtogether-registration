@@ -2,3 +2,5 @@ ACCOUNT_OPEN_SIGNUP = True
 CONTACT_EMAIL = 'test@example.com'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'accounts.User'
