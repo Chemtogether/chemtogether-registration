@@ -18,6 +18,7 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
+            user.is_company = True
             user.save()
             current_site = get_current_site(request)
             mail_subject = 'Verify your account'
@@ -47,6 +48,7 @@ def activate(request, uidb64, token):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
+        user.is_company = True
         user.save()
         login(request, user)
         messages.add_message(request, messages.INFO, 'Your account was successfully verified. You have been logged in.')

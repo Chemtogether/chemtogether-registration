@@ -41,6 +41,22 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
 
+    is_active = models.BooleanField(
+        _('verified status'),
+        default=False,
+        help_text=_('Designates whether the user has verified its account.'),
+    )
+    is_company = models.BooleanField(
+        _('company status'),
+        default=True,
+        help_text=_('Designates whether the user is a company or a staff member.'),
+    )
+    is_exhibitor = models.BooleanField(
+        _('exhibitor status'),
+        default=False,
+        help_text=_('Designates whether the company was accepted as an exhibitor.'),
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
