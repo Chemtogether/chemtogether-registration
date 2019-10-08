@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block add_head %}
+{% endblock add_head %}
+
+{% block add_foot %}
+{% endblock add_foot %}
+
+{% block content_body %}
+<h1>Landing Page</h1>
+
+{% if user.is_authenticated %}
+  <p>Hi {{ user }}!</p>
+  <p><a href="{% url 'logout' %}">logout</a></p>
+  <p><a href="{% url 'password_change' %}">change password</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <p><a href="{% url 'login' %}">login</a></p>
+  <p><a href="{% url 'signup' %}">sign up</a></p>
+  <p><a href="{% url 'password_reset' %}">reset password</a></p>
+{% endif %}
+{% endblock content_body %}

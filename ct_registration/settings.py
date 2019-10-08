@@ -13,15 +13,13 @@ DEBUG = True
 # Allowed hosts
 ALLOWED_HOSTS = []
 
-# Site ID
-SITE_ID = 1
-
 
 # Application definition
 
 INSTALLED_APPS = [
     'apps.accounts',
     'apps.basic',
+    'apps.companies',
     'apps.forms',
     'dynamic_preferences',
     'crispy_forms',
@@ -29,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
