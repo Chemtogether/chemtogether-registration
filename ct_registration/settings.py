@@ -19,7 +19,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'apps.accounts',
     'apps.basic',
-    'apps.companies',
+    'apps.profiles',
     'apps.forms',
     'dynamic_preferences',
     'crispy_forms',

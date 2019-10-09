@@ -1,6 +1,9 @@
+import logging
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+logger = logging.getLogger("ct_registration.accounts.models")
 
 
 class UserManager(BaseUserManager):
@@ -46,23 +49,25 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
 
-    role = models.IntegerField(
-        _('user role'),
-        choices=( #SPECIFICATION: companies must always have value >= 0 and staff < 0 
+    roles = ( #SPECIFICATION: companies must always have value >= 0 and staff < 0 
             (-3, _("Staff: Admin")),    
             (-2, _("Staff: Moderator")),    
             (-1, _("Staff: Viewer")),
             (0, _("Company: non-registered")),
             (1, _("Company: registered")),
             (2, _("Company: accepted"))
-        ),
-        default=0,
-        help_text=_('Designates what role the user has.'),
+        )
+
+    role = models.IntegerField(
+        _('user role'),
+        choices = roles,
+        default = 0,
+        help_text = _('Designates what role the user has.'),
     )
     is_active = models.BooleanField(
         _('verified status'),
-        default=False,
-        help_text=_('Designates whether the user has verified its account.'),
+        default = False,
+        help_text = _('Designates whether the user has verified its account.'),
     )
 
     USERNAME_FIELD = 'email'
@@ -74,9 +79,33 @@ class User(AbstractUser):
         """ Returns True if the user corresponds to a company account. """
         return self.role >= 0
 
-    def is_staff(self):
+    def is_staffmember(self):
         """ Returns True if the user corresponds to a staff account. """
         return self.role < 0
+
+
+    def demote_to_nonregistered_company(self):
+        """ Changes user status to non-registered company. """
+        self.role = 0
+        return True
+
+    def promote_to_registered_company(self):
+        """ Changes user status to registered company. """
+        if not self.role == 0:
+            logger.error("Attempted to promote user %s to registered company, but user is %s and not a non-registered company." % (self.email, self.role))
+            return False
+        else:
+            self.role = 1
+            return True
+
+    def promote_to_accepted_company(self):
+        """ Changes user status to accepted company. """
+        if not self.role == 1:
+            logger.error("Attempted to promote user %s to accepted company, but user is %s and not a registered company." % (self.email, self.role))
+            return False
+        else:
+            self.role = 2
+            return True
 
     def __str__(self):
         return self.email

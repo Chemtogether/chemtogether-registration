@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Group
 
 from .models import User
-from apps.companies.models import Company
 
 
 admin.site.unregister(Group)
