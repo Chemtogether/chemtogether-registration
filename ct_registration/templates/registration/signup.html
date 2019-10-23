@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load i18n %}
 
 {% load crispy_forms_tags %}
 
@@ -6,16 +7,19 @@
 <div class="row">
     <div class="col-md-12">
         <h2>Sign up</h2>
+        <br>
+        <b>{% trans 'Important' %}: </b>{% trans 'Signing up for an account with this form is not a registration for the fair. If you sign up, you will be notified about the opening of the registration and will be able to register for the fair in a separate registration step.' %}
+        <br><br>
         <form method="post">
             {% csrf_token %}
             {{ form|crispy }}
+            <p>
+            <small>{% trans 'By signing up, you agree to receive information regarding the fair registration via email.' %}</small>
+            <br>
+            <small>{% trans 'Already have an account?' %} <strong><a href="{% url 'login' %}">{% trans 'Log in' %}</a></strong></small>
+            </p>
             <button type="submit" class="btn btn-primary">Sign up</button>
         </form>
-        <p>
-            <small>
-                Already have an account? <strong><a href="{% url 'login' %}">Log in</a></strong>
-            </small>
-        </p>
     </div>
 </div>
 {% endblock %}

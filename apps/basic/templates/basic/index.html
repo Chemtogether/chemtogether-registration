@@ -11,12 +11,7 @@
 
 {% if user.is_authenticated %}
   <p>Hi {{ user }}!</p>
-  <p><a href="{% url 'logout' %}">logout</a></p>
-  <p><a href="{% url 'password_change' %}">change password</a></p>
 {% else %}
-  <p>You are not logged in</p>
-  <p><a href="{% url 'login' %}">login</a></p>
-  <p><a href="{% url 'signup' %}">sign up</a></p>
-  <p><a href="{% url 'password_reset' %}">reset password</a></p>
+  <p>Not logged in.</p>
 {% endif %}
 {% endblock content_body %}
