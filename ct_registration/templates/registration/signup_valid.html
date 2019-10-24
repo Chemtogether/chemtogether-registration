@@ -1,11 +1,20 @@
 {% extends 'main.html' %}
+{% load i18n %}
 
 {% block content_body %}
 <div class="row">
     <div  class="col-md-12">
-        <h1>Verification successfull.</h1>
-        <p>Verification of your email was successfull. You are now logged in.</p>
+        <h1>{% trans 'Verification successful' %}</h1>
+        <br>
+        <div class="card bg-warning bootstrap-override mb-3">
+            <div class="card-header"><b>{% trans 'Important' %}</b></div>
+            <div class="card-body">
+              <p class="card-text">{% trans 'Having signed up for an account is not a registration for the fair. If you sign up, you will be notified about the opening of the application process and will be able to register for the fair in a separate application step as soon as the application process is open.' %}</p>
+            </div>
+        </div>
+        <br>
+        <p>{% trans 'Verification of your email was successful. You are now logged in.' %}</p>
     </div>
 </div>
-<p>If you have any trouble setting up your account, contact us at  <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a>.</p>
+<p><small>{% trans 'If you have any trouble setting up your account, contact us at' %} <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a>.</small></p>
 {% endblock %}

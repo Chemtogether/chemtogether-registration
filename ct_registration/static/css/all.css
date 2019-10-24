@@ -1,0 +1,92 @@
+.bootstrap-override .bg-warning, .bg-warning, .bg-ctblue {
+    background-color: #56abd6 !important;
+    color: white;
+}
+
+.bootstrap-override .bg-info, .bg-info, .bg-ctorange {
+    background-color: #e56b2e !important;
+}
+
+
+.bootstrap-override .jumbotron, .jumbotron {
+    background-color: transparent !important;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    margin-bottom: 0px;
+}
+
+
+.bootstrap-override .btn-primary, .btn-primary {
+    background-color: #56abd6 !important;
+    border-color: #56abd6 !important;
+}
+
+.bootstrap-override .btn-secondary, .btn-secondary {
+    background-color: #e56b2e !important;
+    border-color: #e56b2e !important;
+}
+
+
+
+
+
+
+/*==================== 
+	Footer 
+====================== */
+
+/* Main Footer */
+footer .main-footer{	padding: 20px 0;	background: #2b2b2b;}
+footer ul{	padding-left: 0;	list-style: none;}
+
+/* Footer Top */
+.footer-top{	background: #2b2b2b;	padding-bottom: 30px;	margin-bottom: 30px;	border-bottom: 3px solid #2b2b2b;}
+
+/* Footer transparent */
+footer.transparent .footer-top, footer.transparent .main-footer{	background: transparent;}
+footer.transparent .footer-copyright{	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3) ;}
+
+/* Footer light */
+footer.light .footer-top{	background: #f9f9f9;}
+footer.light .main-footer{	background: #f9f9f9;}
+footer.light .footer-copyright{	background: none repeat scroll 0 0 rgba(255, 255, 255, 0.3) ;}
+
+footer a, footer a:hover {
+    color: white;
+}
+
+/* Footer 4 */
+.footer- .logo {    display: inline-block;}
+
+/*==================== 
+	Widgets 
+====================== */
+.widget{	padding: 20px;	margin-bottom: 40px;}
+.widget.widget-last{	margin-bottom: 0px;}
+.widget.no-box{	padding: 0;	background-color: transparent;	margin-bottom: 0px;
+	box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none; -ms-box-shadow: none; -o-box-shadow: none;}
+.widget-title {margin-bottom: 20px;}
+.widget-title span {background: #e56b2e none repeat scroll 0 0;display: block; height: 1px;margin-top: 25px;position: relative;width: 20%;}
+.widget-title span::after {background: inherit;content: "";height: inherit;    position: absolute;top: -4px;width: 50%;}
+.widget-title.text-center span,.widget-title.text-center span::after {margin-left: auto;margin-right:auto;left: 0;right: 0;}
+.widget .badge{	float: right;	background: #7f7f7f;}
+
+.typo-light h1, 
+.typo-light h2, 
+.typo-light h3, 
+.typo-light h4, 
+.typo-light h5, 
+.typo-light h6,
+.typo-light p,
+.typo-light div,
+.typo-light span,
+.typo-light small{	color: #fff;}
+
+ul.social-footer2 {	margin: 0;padding: 0;	width: auto;}
+ul.social-footer2 li {display: inline-block;padding: 0;}
+ul.social-footer2 li a {color: white; display: block;	height:30px;width: 30px;text-align: center;}
+ul.social-footer2 li a img {filter: invert(1);}
+
+f
+
+}

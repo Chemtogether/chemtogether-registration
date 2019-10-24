@@ -1,0 +1,65 @@
+{% load i18n %}
+<div class="container">
+        <div class="card-deck">
+            <div class="card mb-4">
+                <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% trans 'The Fair' %}
+                    </h4>
+                    <p class="card-text">
+                        {% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries.' %}
+                    </p>
+                    <div class="text-center"> 
+                        <a class="btn btn-secondary" href="{% url 'basic:info_fair' %}" role="button">{% trans 'Learn more' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
+            <div class="card mb-4">
+                <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% trans 'How To Register' %}
+                    </h4>
+                    <p class="card-text">
+                        {% trans 'Your company can be an exhibitor at Chemtogether. To apply, follow the three-step application procedure.' %}
+                    </p>
+                    <div class="text-center"> 
+                        <a class="btn btn-secondary" href="{% url 'basic:info_application' %}" role="button">{% trans 'Learn more' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
+            <div class="w-100 d-none d-sm-none d-md-block d-lg-none"><!-- wrap every 2 on sm--></div>
+            <div class="card mb-4">
+                <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% trans 'Our Offers' %}
+                    </h4>
+                    <p class="card-text">
+                        {% trans 'As an exhibitor, you can choose between four different packages for your booth at the fair.' %}
+                    </p>
+                    <div class="text-center"> 
+                        <a class="btn btn-secondary" href="{% url 'basic:info_packages' %}" role="button">{% trans 'Learn more' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
+            <div class="card mb-4">
+                <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% trans 'Contact Us' %}
+                    </h4>
+                    <p class="card-text">
+                        {% trans 'If you have any other questions or enquiries, feel free to contact us at any time.' %}
+                    </p>
+                    <div class="text-center"> 
+                        <a class="btn btn-secondary" href="mailto:info@example.com" role="button">{% trans 'Mail us' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

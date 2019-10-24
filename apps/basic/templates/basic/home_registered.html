@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block add_head %}
+{% endblock add_head %}
+
+{% block add_foot %}
+{% endblock add_foot %}
+
+{% block content_body %}
+<div class="jumbotron bootstrap-override">
+    <h1 class="display-6">{% trans 'Applications open January 20th!' %}</h1>
+    <p class="lead">{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries. The application process for exhibitors of Chemtogether 2020 will open on January 20th.' %}</p>
+    <hr class="my-4">
+    <p>{% trans 'You have created an account and will be informed as soon as the application process is opened. The application form will be shown below. If you have any questions in the meantime, contact us below.' %}</p>
+    <p class="lead">
+		<a class="btn btn-primary btn-lg" href="mailto:info@test.com" role="button">{% trans 'Contact by mail' %}</a>
+    </p>
+</div>
+
+<br>
+<div class="card bg-warning bootstrap-override mb-3">
+    <div class="card-header"><b>{% trans 'Important' %}</b></div>
+    <div class="card-body">
+      <p class="card-text">{% trans 'Having signed up for an account is not a registration for the fair. If you sign up, you will be notified about the opening of the application process and will be able to register for the fair in a separate application step as soon as the application process is open.' %}</p>
+    </div>
+</div>
+<br><br>
+
+
+
+{% include 'basic/info_cards.html' %}
+
+<br>
+<br>
+{% endblock content_body %}

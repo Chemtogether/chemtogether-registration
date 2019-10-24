@@ -53,8 +53,8 @@ class User(AbstractUser):
             (-3, _("Staff: Admin")),    
             (-2, _("Staff: Moderator")),    
             (-1, _("Staff: Viewer")),
-            (0, _("Company: non-registered")),
-            (1, _("Company: registered")),
+            (0, _("Company: registered")),
+            (1, _("Company: has applied")),
             (2, _("Company: accepted"))
         )
 

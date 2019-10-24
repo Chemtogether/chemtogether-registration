@@ -1,14 +1,14 @@
 {% extends 'main.html' %}
-
+{% load i18n %}
 
 {% block content_body %}
 <div class="row">
     <div class="col-md-12">
-        <h2>Sign up</h2>
-        Sign up is closed.
+        <h1>{% trans 'Sign up' %}</h1>
+        {% trans 'Sign up is closed.' %}
         <p>
             <small>
-                Already have an account? <strong><a href="{% url 'login' %}">Log in</a></strong>
+                {% trans 'Already have an account?' %} <strong><a href="{% url 'login' %}">{% trans 'Log in' %}</a></strong>
             </small>
         </p>
     </div>

@@ -1,11 +1,12 @@
 {% extends 'main.html' %}
+{% load i18n %}
 
 {% block content_body %}
 <div class="row">
     <div  class="col-md-12">
-        <h1>Verification link invalid.</h1>
-        <p>Please check that your verification link is correct.</p>
+        <h1>{% trans 'Verification link invalid' %}</h1>
+        <p>{% trans 'Please check that your verification link is correct.' %}</p>
     </div>
 </div>
-<p>If you have any trouble setting up your account, contact us at  <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a>.</p>
+<p>{% trans 'If you have any trouble setting up your account, contact us at' %} <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a>.</p>
 {% endblock %}

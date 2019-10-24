@@ -6,15 +6,20 @@
 {% block content_body %}
 <div class="row">
     <div class="col-md-12">
-        <h2>Sign up</h2>
+        <h1>{% trans 'Sign up' %}</h1>
         <br>
-        <b>{% trans 'Important' %}: </b>{% trans 'Signing up for an account with this form is not a registration for the fair. If you sign up, you will be notified about the opening of the registration and will be able to register for the fair in a separate registration step.' %}
-        <br><br>
+        <div class="card bg-warning bootstrap-override mb-3">
+            <div class="card-header"><b>{% trans 'Important' %}</b></div>
+            <div class="card-body">
+              <p class="card-text">{% trans 'Signing up for an account with this form is not a registration for the fair. If you sign up, you will be notified about the opening of the application process and will be able to register for the fair in a separate application step as soon as the application process is open.' %}</p>
+            </div>
+        </div>
+        <br>
         <form method="post">
             {% csrf_token %}
             {{ form|crispy }}
             <p>
-            <small>{% trans 'By signing up, you agree to receive information regarding the fair registration via email.' %}</small>
+            <small>{% trans 'By signing up, you agree to receive information regarding the fair via email.' %}</small>
             <br>
             <small>{% trans 'Already have an account?' %} <strong><a href="{% url 'login' %}">{% trans 'Log in' %}</a></strong></small>
             </p>
