@@ -53,7 +53,7 @@ class User(AbstractUser):
             (-3, _("Staff: Admin")),    
             (-2, _("Staff: Moderator")),    
             (-1, _("Staff: Viewer")),
-            (0, _("Company: registered")),
+            (0, _("Company: no application")),
             (1, _("Company: has applied")),
             (2, _("Company: accepted"))
         )
@@ -79,32 +79,78 @@ class User(AbstractUser):
         """ Returns True if the user corresponds to a company account. """
         return self.role >= 0
 
+
+    def is_company_has_not_applied(self):
+        """ Returns True if the user corresponds to a company account that has an account but has not applied yet. """
+        return self.role == 0
+
+
+    def is_company_has_applied(self):
+        """ Returns True if the user corresponds to a company account that has applied. """
+        return self.role == 1
+
+
+    def is_company_is_accepted(self):
+        """ Returns True if the user corresponds to a company account that has been accepted. """
+        return self.role == 2
+
+
     def is_staffmember(self):
         """ Returns True if the user corresponds to a staff account. """
         return self.role < 0
 
+    def is_staffmember_has_no_profile(self):
+        """ Returns True if the user corresponds to a staff account without profile. """
+        return self.role == -1
 
-    def demote_to_nonregistered_company(self):
-        """ Changes user status to non-registered company. """
-        self.role = 0
+    def is_staffmember_has_profile(self):
+        """ Returns True if the user corresponds to a staff account with profile. """
+        return self.role == -2
+
+    def is_staffmember_is_admin(self):
+        """ Returns True if the user corresponds to a staff account with admin rights. """
+        return self.role == -3
+
+    def demote_to_staff_without_profile(self):
+        """ Changes user status to staff without profile. """
+        self.role = -1
+        self.save()
         return True
 
-    def promote_to_registered_company(self):
-        """ Changes user status to registered company. """
+    def promote_to_staff_with_profile(self):
+        """ Changes user status to staff with profile. """
+        if not self.role == -1:
+            logger.error("Attempted to promote user %s to staff with profile, but user is %s and not staff without profile." % (self.email, self.role))
+            return False
+        else:
+            self.role = -2
+            self.save()
+            return True
+
+    def demote_to_company_has_not_applied(self):
+        """ Changes user status to company without application. """
+        self.role = 0
+        self.save()
+        return True
+
+    def promote_to_company_has_applied(self):
+        """ Changes user status to company with application. """
         if not self.role == 0:
-            logger.error("Attempted to promote user %s to registered company, but user is %s and not a non-registered company." % (self.email, self.role))
+            logger.error("Attempted to promote user %s to company with application, but user is %s and not a company without application." % (self.email, self.role))
             return False
         else:
             self.role = 1
+            self.save()
             return True
 
     def promote_to_accepted_company(self):
         """ Changes user status to accepted company. """
         if not self.role == 1:
-            logger.error("Attempted to promote user %s to accepted company, but user is %s and not a registered company." % (self.email, self.role))
+            logger.error("Attempted to promote user %s to accepted company, but user is %s and not a company with application." % (self.email, self.role))
             return False
         else:
             self.role = 2
+            self.save()
             return True
 
     def __str__(self):

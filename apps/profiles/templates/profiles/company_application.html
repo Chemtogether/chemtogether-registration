@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+{% block content_body %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>{% trans 'Application to Chemtogether' %}</h1>
+        <br>
+        <div class="card bg-info bootstrap-override mb-3">
+            <div class="card-header"><b>{% trans 'Important' %}</b></div>
+            <div class="card-body">
+              <p class="card-text">{% trans 'Submitting this form is a binding application for the event. However, submission of this form is not a fixed registration. Only after we have confirmed and explicitly accepted your application are you registered for the career fair and may attend the event.' %}</p>
+            </div>
+        </div>
+        <br>
+        <div class="card bg-warning bootstrap-override mb-3">
+            <div class="card-header"><b>{% trans 'Note' %}</b></div>
+            <div class="card-body">
+              <p class="card-text">{% trans 'As long as your application has not been confirmed and explicitly accepted, you may change your application freely using the form below. Only your latest application is valid, however. If you wish to withdraw your application, please contact us directly via mail.' %}</p>
+            </div>
+        </div>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <button type="submit" class="btn btn-primary">Submit your binding application</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

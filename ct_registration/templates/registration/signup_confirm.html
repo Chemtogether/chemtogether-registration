@@ -7,11 +7,17 @@
         <h1>{% trans 'Check your inbox' %}</h1>
         <br>
         <div class="card bg-warning bootstrap-override mb-3">
-            <div class="card-header"><b>{% trans 'Important' %}</b></div>
-            <div class="card-body">
-              <p class="card-text">{% trans 'Having signed up for an account is not a registration for the fair. If you sign up, you will be notified about the opening of the application process and will be able to register for the fair in a separate application step as soon as the application process is open.' %}</p>
+                <div class="card-header"><b>{% trans 'Important' %}</b></div>
+                <div class="card-body">
+                  <p class="card-text">
+                        {% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
+                        {% trans 'Signing up for an account is not a registration for the fair. The process of applying for the fair begins after account creation with the application form.' %}
+                    {% else %}
+                        {% trans 'Signing up for an account is not a registration for the fair. You will be notified about the opening of the application process and will be able to apply for the fair in a separate application step as soon as the application process is open.' %}
+                {% endif %}
+                    </p>
+                </div>
             </div>
-        </div>
         <br>
         <p>{% trans 'We have emailed you a verification link. You should receive the email shortly.' %}</p>
     </div>

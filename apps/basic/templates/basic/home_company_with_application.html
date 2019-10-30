@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block add_head %}
+{% endblock add_head %}
+
+{% block add_foot %}
+{% endblock add_foot %}
+
+{% block content_body %}
+{% now "U" as current_time %}
+<div class="jumbotron bootstrap-override">
+    <h1 class="display-6">
+		{% trans 'You have applied for Chemtogether 2020' %}
+	</h1>
+    <p class="lead">		
+		{% trans 'We will process your application and inform you about the next steps. Note that your application is not a fixed registration for the fair. Only after written, explicit confirmation of your application by us is your company accepted as an exhibitor of the fair.' %}
+    </p>
+    <hr class="my-4">
+    <p>
+		{% trans 'As long as your application is not accepted, you can make changes to your application freely. Note that only the latest application is valid and will be considered.' %}
+	</p>
+    <p class="lead">
+		<a class="btn btn-outline-secondary btn-lg" href="{% url 'profiles:application' %}" role="button">{% trans 'Change application details' %}</a>
+    </p>
+</div>
+
+<br>
+
+<h2>{% trans 'Get in touch with' %}</h2><br>
+{% include 'profiles/staff_profile.html' with staff=representative %}
+
+<br><br><br>
+<h2>{% trans 'Learn more about' %}</h2><br>
+{% include 'basic/info_cards.html' %}
+
+<br>
+<br>
+{% endblock content_body %}

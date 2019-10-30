@@ -9,8 +9,13 @@
 
 {% block content_body %}
 
-
-<h1>Hi {{ user }}!</h1>
+{% if user.profile.get %}
+<h1>Hi {{ user.profile.get.first_name }}!</h1>
+<a href="{% url 'profiles:representative' %}" class="btn btn-outline-primary">Edit your profile</a>
+{% else %}
+<h1>Hi!</h1>
+<a href="{% url 'profiles:representative' %}" class="btn btn-outline-primary">Create your profile</a>
+{% endif %}
 
 
 

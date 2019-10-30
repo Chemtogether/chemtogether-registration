@@ -8,19 +8,37 @@
 {% endblock add_foot %}
 
 {% block content_body %}
+{% now "U" as current_time %}
 <div class="jumbotron bootstrap-override">
-    <h1 class="display-6">{% trans 'Chemtogether 2020: Company Registration' %}</h1>
-    <p class="lead">{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries. The application process for exhibitors of Chemtogether 2020 will open on January 20th.' %}</p>
-    <hr class="my-4">
-    <p>{% trans 'To stay up to date and be informed about the opening of the application process, subscribe to our news via email by signing up.' %}</p>
+    <h1 class="display-6">
+		{% trans 'Chemtogether 2020: Company Registration' %}
+	</h1>
     <p class="lead">
-		<a class="btn btn-primary" href="{% url 'signup' %}" role="button">{% trans 'Sign up' %}</a>
-		<a class="btn btn-primary" href="{% url 'login' %}" role="button">{% trans 'Log in' %}</a>
+		{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries.' %}
+		<br>
+        {% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
+			{% trans 'The application process for exhibitors of Chemtogether 2020 is open.' %}
+		{% else %}
+			{% trans 'The application process for exhibitors of Chemtogether 2020 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
+        {% endif %}
+	</p>
+    <hr class="my-4">
+    <p>
+		{% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
+			{% trans 'To start the application process for Chemtogether 2020, either sign up for an account or log into your existing account.' %}
+		{% else %}
+			{% trans 'To be informed as soon as the application process for Chemtogether 2020 is started, you can already create an account that is required for the application.' %}
+		{% endif %}
+	</p>
+    <p class="lead">
+		<a class="btn btn-outline-primary" href="{% url 'signup' %}" role="button">{% trans 'Sign up' %}</a>
+		<a class="btn btn-outline-primary" href="{% url 'login' %}" role="button">{% trans 'Log in' %}</a>
     </p>
 </div>
 
 
 <br><br>
+<h2>{% trans 'Learn more about' %}</h2><br>
 {% include 'basic/info_cards.html' %}
 
 <br>

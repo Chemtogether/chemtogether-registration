@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+{% block content_body %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>{% trans 'Your Profile' %}</h1>
+        {% if user.is_staffmember_has_profile %}
+            {% trans 'This is how your profile will look like to company representatives.' %}
+            <br><br>
+            {% include 'profiles/staff_profile.html' with staff=user.profile.get %}
+        {% else %}
+            {% trans 'No profile found. Please create your profile using the form below. You can only claim companies if you have a profile set up.' %}
+        {% endif %}
+    </div>
+</div>
+<br><br><br>
+<div class="row">
+    <div class="col-md-12">
+        <h2>{% trans 'Profile Settings' %}</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

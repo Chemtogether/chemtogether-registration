@@ -5,6 +5,7 @@
 
 .bootstrap-override .bg-info, .bg-info, .bg-ctorange {
     background-color: #e56b2e !important;
+    color: white;
 }
 
 
@@ -24,6 +25,26 @@
 .bootstrap-override .btn-secondary, .btn-secondary {
     background-color: #e56b2e !important;
     border-color: #e56b2e !important;
+}
+
+
+.bootstrap-override .btn-outline-primary, .btn-outline-primary {
+    color: #56abd6 !important;
+    border-color: #56abd6 !important;
+}
+.bootstrap-override .btn-outline-primary:hover, .btn-outline-primary:hover {
+    background-color: #56abd6 !important;
+    color: white !important;
+}
+
+.bootstrap-override .btn-outline-secondary, .btn-outline-secondary {
+    color: #e56b2e !important;
+    border-color: #e56b2e !important;
+}
+
+.bootstrap-override .btn-outline-secondary:hover, .btn-outline-secondary:hover {
+    background-color: #e56b2e !important;
+    color: white !important;
 }
 
 

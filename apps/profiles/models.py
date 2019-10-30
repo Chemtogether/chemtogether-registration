@@ -1,12 +1,28 @@
 import logging
+import uuid
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from dynamic_preferences.registries import global_preferences_registry
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
 logger = logging.getLogger("ct_registration.companies.models")
+
+
+
+
+
+
+def scramble_uploaded_filename(instance, filename):
+    prefix = 'staff_images/'
+    extension = filename.split(".")[-1]
+    uid = uuid.uuid4()
+    return "{}{}.{}".format(prefix, uid, extension)
+
+
+
 
 
 
@@ -48,10 +64,21 @@ class Representative(models.Model):
 
     image = models.ImageField(
         verbose_name = _('picture'),
-        upload_to = 'staff_images/',
+        upload_to = scramble_uploaded_filename,
         default = 'staff_images/default.jpg',
         help_text = _('Your picture shown to companies.'),
     )
+
+    default_contact = models.BooleanField(
+        verbose_name = _('default contact'),
+        default = False,
+        help_text = _('Whether this user is to be the default contact person for new companies.'),
+    )
+
+    def delete(self, *args, **kwargs):
+        if not self.staff_user.demote_to_staff_without_profile():
+            logger.error("Demotion of staff %s to staff without profile failed." % self.title)
+        return super(Representative, self).delete(*args, **kwargs)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -73,7 +100,7 @@ class Company(models.Model):
     )
 
     title = models.CharField(
-        verbose_name = _('first name'),
+        verbose_name = _('company name'),
         max_length = 30,
         help_text = _('Title of the company as it will be shown at the fair and in the fair material. Limited to 30 characters.'),
     )
@@ -132,13 +159,14 @@ class Company(models.Model):
     )
 
     accepts_tos = models.BooleanField(
-        verbose_name = _('accept terms of service'),
+        verbose_name = _('I accept the terms of service'),
+        blank = False,
         help_text = _('You must accept the terms of service to apply.'),
     )
 
     comments = models.TextField(
         verbose_name = _('comments'),
-        null = True,
+        blank = True,
         help_text = _('Additional comments. Optional.'),
     )
 
@@ -153,16 +181,17 @@ class Company(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.accepts_tos:
-            logger.error("Company %s attempted to save their registration without accepting the TOS." % self.title)
-            return
-        if not self.company_user.promote_to_registered_company():
-            logger.error("Promotion of company %s to registered company failed." % self.title)
+            logger.error("Company %s attempted to save their registration without accepting the ToS." % self.title)
             return
         return super(Company, self).save(*args, **kwargs)
 
+    def clean(self):
+        if not self.accepts_tos:
+            raise ValidationError('Please accept the Terms of Service.')
+
     def delete(self, *args, **kwargs):
-        if not self.company_user.demote_to_nonregistered_company():
-            logger.error("Demotion of company %s to non-registered company failed." % self.title)
+        if not self.company_user.demote_to_company_has_not_applied():
+            logger.error("Demotion of company %s to company without application failed." % self.title)
         return super(Company, self).delete(*args, **kwargs)
 
     def __str__(self):

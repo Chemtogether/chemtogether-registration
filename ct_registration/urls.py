@@ -7,6 +7,10 @@ from django.conf.urls.static import static
 
 from . import views
 
+admin.site.site_header = "Chemtogether Registration Platform"
+admin.site.site_title = "Chemtogether Registration Platform - Admin Portal"
+admin.site.index_title = "Welcome to Chemtogether Registration Platform"
+
 urlpatterns = [
     path('', include('apps.basic.urls', namespace='basic')),
     path('admin/', admin.site.urls),
