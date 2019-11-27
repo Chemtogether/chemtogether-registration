@@ -13,6 +13,10 @@ DEBUG = True
 # Allowed hosts
 ALLOWED_HOSTS = []
 
+# Captcha keys, see https://www.google.com/recaptcha/
+RECAPTCHA_PUBLIC_KEY = '6Ldy8sQUAAAAAOCmFkVUxRytDcuhCzVsv5BuCjf5'
+RECAPTCHA_PRIVATE_KEY = '6Ldy8sQUAAAAAAn7lpjcJfuitGe-Fv6OvqfLAQY4'
+
 
 # Application definition
 
@@ -23,6 +27,7 @@ INSTALLED_APPS = [
     'apps.forms',
     'dynamic_preferences',
     'crispy_forms',
+    'captcha',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,7 +131,21 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Host for sending e-mail.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+
+# Port for sending e-mail.
+EMAIL_PORT = 25
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'Chemtogether Career Fair <info@chemtogether.ethz.ch>'
+
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

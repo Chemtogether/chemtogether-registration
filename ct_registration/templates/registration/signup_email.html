@@ -1,10 +1,15 @@
 {% autoescape off %}
-Please click on the link to confirm your registration,
+Welcome to the Chemtogether Registration Platform!
+
+Please click on the link below to confirm your registration and activate your account:
 
 {{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}
 
+Important: Creation and activation of an account is not a registration for the fair. To apply for the fair, please follow the application procedure outlined on the homepage.
+
 If clicking the link above doesn't work, please copy and paste the URL in a new browser window instead.
+If you need any help, contact us at info@chemtogether.ethz.ch anytime.
 
 Sincerely,
-The Team
+Chemtogether
 {% endautoescape %}
