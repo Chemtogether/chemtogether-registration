@@ -1,25 +1,12 @@
 import os
 from .account_settings import *
+from .production_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'change+this'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-# Allowed hosts
-ALLOWED_HOSTS = []
-
-# Captcha keys, see https://www.google.com/recaptcha/
-RECAPTCHA_PUBLIC_KEY = '6Ldy8sQUAAAAAOCmFkVUxRytDcuhCzVsv5BuCjf5'
-RECAPTCHA_PRIVATE_KEY = '6Ldy8sQUAAAAAAn7lpjcJfuitGe-Fv6OvqfLAQY4'
-
 
 # Application definition
-
 INSTALLED_APPS = [
     'apps.accounts',
     'apps.basic',
@@ -85,13 +72,6 @@ DATABASES = {
     }
 }
 
-# Authentication backends
-# https://docs.djangoproject.com/en/2.2/ref/settings/#authentication-backends
-# AUTHENTICATION_BACKENDS = [
-#     # 'account.auth_backends.EmailAuthenticationBackend',
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -130,21 +110,6 @@ USE_TZ = True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Host for sending e-mail.
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
-
-# Port for sending e-mail.
-EMAIL_PORT = 25
-
-# Optional SMTP authentication information for EMAIL_HOST.
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = 'Chemtogether Career Fair <info@chemtogether.ethz.ch>'
-
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
