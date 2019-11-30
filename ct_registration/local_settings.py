@@ -25,4 +25,3 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'Chemtogether Career Fair <info@chemtogether.ethz.ch>'
-
