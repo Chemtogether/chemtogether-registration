@@ -21,12 +21,10 @@
                                 {% trans 'Information' %}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                {% url 'basic:info_fair' as url %}
-                                <a class="dropdown-item {% if request.path == url %}active{% endif %}" href="{{ url }}">{% trans 'on the career fair' %}</a>
+                                <a class="dropdown-item" href="https://www.chemtogether.ethz.ch" target="_blank">{% trans 'on the career fair' %}</a>
+                                <a class="dropdown-item" href="https://www.chemtogether.ethz.ch/exhibitors/" target="_blank">{% trans 'on the fair packages' %}</a>
                                 {% url 'basic:info_application' as url %}
                                 <a class="dropdown-item {% if request.path == url %}active{% endif %}" href="{{ url }}">{% trans 'on the application process' %}</a>
-                                {% url 'basic:info_packages' as url %}
-                                <a class="dropdown-item {% if request.path == url %}active{% endif %}" href="{{ url }}">{% trans 'on the fair packages' %}</a>
                                 <a class="dropdown-item" href="{% static 'files/tos.pdf' %}">{% trans 'Terms of Service' %}</a>
                             </div>
                           </div>

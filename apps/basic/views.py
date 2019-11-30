@@ -36,16 +36,6 @@ def index(request):
 
 
 
-def info_fair(request):
-
-    context = {
-        'title': 'Information'
-    }
-
-    return render(request, 'basic/info_fair.html', context=context)
-
-
-
 def info_application(request):
 
     context = {
@@ -53,13 +43,3 @@ def info_application(request):
     }
 
     return render(request, 'basic/info_application.html', context=context)
-
-
-
-def info_packages(request):
-
-    context = {
-        'title': 'Information'
-    }
-
-    return render(request, 'basic/info_packages.html', context=context)
