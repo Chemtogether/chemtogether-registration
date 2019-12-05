@@ -1,4 +1,4 @@
-Django==2.2.7
+Django==2.2.8
 django-crispy-forms==1.8.1
 django-dynamic-preferences==1.8
 django-recaptcha==2.0.5
