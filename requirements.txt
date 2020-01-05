@@ -1,9 +1,10 @@
-Django==2.2.7
+asgiref==3.2.3
+Django==3.0.2
 django-crispy-forms==1.8.1
-django-dynamic-preferences==1.8
+django-dynamic-preferences==1.8.1
 django-recaptcha==2.0.5
 persisting-theory==0.2.1
-Pillow==6.2.1
+Pillow==7.0.0
 python-slugify==4.0.0
 pytz==2019.3
 six==1.13.0

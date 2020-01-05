@@ -12,7 +12,7 @@
             {% csrf_token %}
             {{ form|crispy }}
             <p>
-                <small>{% trans 'Lost your password?' %} <strong><a href="{% url 'login' %}">{% trans 'Reset password' %}</a></strong></small>
+                <small>{% trans 'Lost your password?' %} <strong><a href="{% url 'password_reset' %}">{% trans 'Reset password' %}</a></strong></small>
             </p>
             <button type="submit" class="btn btn-primary">{% trans 'Login' %}</button>
         </form>
