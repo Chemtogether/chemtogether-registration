@@ -15,7 +15,7 @@ class UserAdmin(DjangoUserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('User status'), {'fields': ('is_active', 'role', 'is_superuser')}),
+        (_('User status'), {'fields': ('is_active', 'role', 'is_superuser', 'is_staff')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     readonly_fields = ['last_login', 'date_joined']

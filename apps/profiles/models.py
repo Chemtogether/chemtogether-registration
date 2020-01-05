@@ -66,7 +66,7 @@ class Representative(models.Model):
         verbose_name = _('picture'),
         upload_to = scramble_uploaded_filename,
         default = 'staff_images/default.jpg',
-        help_text = _('Your picture shown to companies.'),
+        help_text = _('Your picture shown to companies. At least 200x300px portrait and optimally in 2:3 aspect ratio.'),
     )
 
     default_contact = models.BooleanField(

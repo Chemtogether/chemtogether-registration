@@ -10,12 +10,62 @@
 {% block content_body %}
 
 {% if user.profile.get %}
-<h1>Hi {{ user.profile.get.first_name }}!</h1>
-<a href="{% url 'profiles:representative' %}" class="btn btn-outline-primary">Edit your profile</a>
+<h1>{% trans 'Welcome' %}, {{ user.profile.get.first_name }}!</h1>
+<p class="lead">{% trans 'What do you want to do?' %}</p>
 {% else %}
-<h1>Hi!</h1>
-<a href="{% url 'profiles:representative' %}" class="btn btn-outline-primary">Create your profile</a>
+<h1>{% trans 'Hi there!' %}</h1>
+<p class="lead">{% trans 'If you would like to manage companies later on, please start by ' %}<a href="{% url 'profiles:representative' %}">{% trans 'creating your profile.' %}</a></p>
 {% endif %}
+
+<br>
+<br>
+<div class="container">
+        <div class="card-deck">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% trans 'Company List' %}
+                    </h4>
+                    <p class="card-text">
+                        {% trans 'View, manage and moderate company registrations and applications. See details about representatives.' %}
+                    </p>
+                    <div class="text-center"> 
+                        <a class="btn btn-outline-secondary" href="https://www.chemtogether.ethz.ch/exhibitors" role="button">{% trans 'Manage Companies' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% trans 'Your Profile' %}
+                    </h4>
+                    <p class="card-text">
+                        {% trans 'Create or edit your profile shown to companies. A profile is required to manage company requests.' %}
+                    </p>
+                    <div class="text-center"> 
+                        <a class="btn btn-outline-secondary" href="{% url 'profiles:representative' %}" role="button">{% trans 'Manage Profile' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
+            <div class="w-100 d-none d-sm-none d-md-block d-lg-none"><!-- wrap every 2 on sm--></div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% trans 'Log out' %}
+                    </h4>
+                    <p class="card-text">
+                        {% trans 'Log out of your account and close this session.' %}
+                    </p>
+                    <div class="text-center"> 
+                        <a class="btn btn-outline-primary" href="{% url 'basic:info_application' %}" role="button">{% trans 'Log out' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 
