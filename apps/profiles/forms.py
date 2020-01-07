@@ -11,7 +11,7 @@ class ApplicationForm(ModelForm):
 
     class Meta:
         model = Company
-        fields = ['title', 'day', 'package', 'first_name', 'last_name', 'email', 'phone_number', 'mailing_address', 'billing_address', 'comments','accepts_tos']
+        fields = ['title', 'day', 'package', 'first_name', 'last_name', 'email', 'phone_number', 'language', 'mailing_address', 'billing_address', 'comments','accepts_tos']
 
 
 

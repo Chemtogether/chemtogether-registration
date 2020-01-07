@@ -102,7 +102,7 @@ class Company(models.Model):
     title = models.CharField(
         verbose_name = _('company name'),
         max_length = 30,
-        help_text = _('Title of the company as it will be shown at the fair and in the fair material. Limited to 30 characters.'),
+        help_text = _('Title of your company as it will be shown at the fair and in the fair material. Limited to 30 characters.'),
     )
 
     day = models.IntegerField(
@@ -111,7 +111,7 @@ class Company(models.Model):
             (1, _("Tuesday")),
             (2, _("Wednesday")),
         ),
-        help_text = _('Day of the fair on which this company will attend.'),
+        help_text = _('Day of the fair on which your company will attend.'),
     )
 
     package = models.IntegerField(
@@ -122,7 +122,7 @@ class Company(models.Model):
             (2, _("Gold Package")),
             (3, _("Platinum Package")),
         ),
-        help_text = _('Choice of package for this company.'),
+        help_text = _('Choice of package for your company.'),
     )
 
     first_name = models.CharField(
@@ -139,13 +139,23 @@ class Company(models.Model):
 
     email = models.EmailField(
         verbose_name = _('mail address'),
-        help_text = _('Email addressof the person of contact for your company.'),
+        help_text = _('Email address of the person of contact for your company. This address will be used for all mail correspondence.'),
     )
 
     phone_number = models.CharField(
         verbose_name = _('phone number'),
         max_length = 50,
         help_text = _('Phone number of the person of contact for your company.'),
+    )
+
+    language = models.IntegerField(
+        verbose_name = _('preferred language'),
+        choices =  (
+            (0, _("English")),
+            (1, _("German")),
+        ),
+        default = 0,
+        help_text = _('Preferred language for any correspondence.'),
     )
 
     mailing_address = models.TextField(
@@ -161,7 +171,7 @@ class Company(models.Model):
     accepts_tos = models.BooleanField(
         verbose_name = _('I accept the terms of service'),
         blank = False,
-        help_text = _('You must accept the terms of service to apply.'),
+        help_text = _('You must accept the <a href="https://registration.chemtogether.ethz.ch/static/files/tos.pdf" target="_blank">terms of service</a> to apply.'),
     )
 
     comments = models.TextField(
