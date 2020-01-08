@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block add_head %}
+{% endblock add_head %}
+
+{% block add_foot %}
+{% endblock add_foot %}
+
+{% block content_body %}
+{% now "U" as current_time %}
+<div class="jumbotron bootstrap-override">
+    <h1 class="display-6">
+		{% trans 'Your company was accepted for Chemtogether 2020' %}
+	</h1>
+    <p class="lead">		
+		{% trans 'Your application to participate in Chemtogether 2020 was accepted. Your registration was successful and is now binding. If you have any questions or wishes, please do not hesitate to contact your personal manager below.' %}
+    </p>
+    <hr class="my-4">
+</div>
+
+<br>
+
+<h2>{% trans 'Your person of contact' %}</h2><br>
+{% include 'profiles/staff_profile.html' with staff=representative %}
+
+
+<br>
+<br>
+{% endblock content_body %}

@@ -1,5 +1,5 @@
 {% load i18n %}
-
+{% if staff %}
 <div class="card" style="max-width: 600px;">
     <div class="row no-gutters">
         <div class="col-auto" style="width:100%;max-width:200px;margin:auto">
@@ -19,4 +19,21 @@
               </div>
         </div>
     </div>
+</div>
+{% endif %}
+<div class="card" style="max-width: 350px;">
+  <div class="row no-gutters">
+      <div class="col">
+          <div class="card-body">
+              <h5 class="card-title">{% trans 'Acquisition Team' %}</h5>
+              <p class="card-text">{% trans 'We will assist if you have any questions or inquiries.' %}</p>
+            </div>
+            <ul class="list-group list-group-flush" style="text-align: center;">
+              <li class="list-group-item"><i class="fas fa-fw fa-envelope"></i> acquisition@chemtogether.ethz.ch</li>
+            </ul>
+            <div class="card-body" style="text-align: center;">
+              <a href="mailto:acquisition@chemtogether.ethz.ch" class="card-link btn btn-primary">Send email</a>
+            </div>
+      </div>
+  </div>
 </div>

@@ -28,11 +28,25 @@ def index(request):
 
         if request.user.is_company_has_applied():
             if not request.user.company.get().staff_user:
-                representative = Representative.objects.filter(default_contact=True)[0]
+                try:
+                    representative = Representative.objects.filter(default_contact=True)[0]
+                except:
+                    representative = False
             else:
                 representative = request.user.company.get().staff_user
             context['representative'] = representative
             return render(request, 'basic/home_company_with_application.html', context=context)
+        
+        if request.user.is_company_is_accepted():
+            if not request.user.company.get().staff_user:
+                try:
+                    representative = Representative.objects.filter(default_contact=True)[0]
+                except:
+                    representative = False
+            else:
+                representative = request.user.company.get().staff_user
+            context['representative'] = representative
+            return render(request, 'basic/home_company_accepted.html', context=context)
 
 
 
