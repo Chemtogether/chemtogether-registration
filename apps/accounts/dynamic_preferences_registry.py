@@ -8,24 +8,6 @@ account_creation = Section('account_creation')
 
 
 @global_preferences_registry.register
-class SiteTitle(StringPreference):
-    section = general
-    name = 'site_title'
-    default = 'My site'
-    verbose_name = 'Site title'
-    help_text = 'Title of this site used in templates.'
-
-@global_preferences_registry.register
-class MaintenanceMode(BooleanPreference):
-    section = general
-    name = 'maintenance_mode'
-    default = False
-    verbose_name = 'Maintenance mode'
-    help_text = 'Shuts down this site and shows a maintenance page instead.'
-
-
-
-@global_preferences_registry.register
 class AccountCreation(BooleanPreference):
     section = account_creation
     name = 'account_creation_open'
@@ -48,3 +30,11 @@ class StaffAccountDomain(StringPreference):
     default = 'example.com'
     verbose_name = 'Domain for domain-enabled staff account creation'
     help_text = 'Domain for the email accounts to be promoted to staff.'
+
+@global_preferences_registry.register
+class StaffAccountWhitelist(StringPreference):
+    section = account_creation
+    name = 'staff_account_whitelist'
+    default = 'webmaster,'
+    verbose_name = 'Mail prefixes whitelist'
+    help_text = 'Only mail-prefixes (all before @) seperated by only a comma. Leave empty to disable whitelisting.'

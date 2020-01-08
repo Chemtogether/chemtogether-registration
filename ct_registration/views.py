@@ -35,7 +35,10 @@ def signup(request):
 
                 # automatic staff account creation based on email domain
                 if global_preferences['account_creation__staff_account_domain_enabled'] and re.search("@.+", email).group(0) == '@' + global_preferences['account_creation__staff_account_domain']:
-                    user.role = -1
+                    prefix = re.search("^.+@", email).group(0)[0:-1]
+                    if not global_preferences['account_creation__staff_account_whitelist'] or prefix in global_preferences['account_creation__staff_account_whitelist'].split(','):
+                        user.role = -1
+                    
 
                 # save user and send verification email
                 user.save()
