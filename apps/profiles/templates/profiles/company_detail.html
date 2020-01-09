@@ -1,0 +1,153 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+{% block content_body %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>{% trans 'Company Details:' %} {{ company.title }}</h1> 
+    </div>
+</div>
+<br><br>
+
+<div class="table-responsive">
+    <table class="table companydetailtable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" colspan="2"><span style="font-size: 22px;">{% trans 'General' %}</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">{% trans 'Status' %}</th>
+                <td>
+                    {% if company_user.is_company_is_accepted %}
+                        Application accepted
+                    {% elif company_user.is_company_has_applied %}
+                        Application open
+                    {% else %}
+                        Error: please inform webmaster
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Assigned Staff' %}</th>
+                <td>{{ staff }}</td>
+            </tr>               
+        </tbody>
+    </table>
+</div>
+
+{% if assign_staff_form %}
+    {% crispy assign_staff_form %}
+{% endif %}
+
+
+{% if accept_company_form %}
+    {% crispy accept_company_form %}
+{% endif %}
+
+<br><br>
+
+<div class="table-responsive">
+    <table class="table companydetailtable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" colspan="2"><span style="font-size: 22px;">{% trans 'Application' %}</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">{% trans 'Company Name' %}</th>
+                <td>{{ company.title }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Fair Day' %}</th>
+                <td>{{ company.get_day_display }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Package' %}</th>
+                <td>{{ company.get_package_display }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Contact: Name' %}</th>
+                <td>{{ company.first_name }} {{ company.last_name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Contact: E-Mail' %}</th>
+                <td>{{ company.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Contact: Phone Number' %}</th>
+                <td>{{ company.phone_number }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Contact: Language' %}</th>
+                <td>{{ company.get_language_display }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Mailing Address' %}</th>
+                <td>{{ company.mailing_address }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Billing Address' %}</th>
+                <td>{{ company.billing_address }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Terms of Service' %}</th>
+                <td>
+                    {% if company.accepts_tos %}
+                        <i class="fas fa-check"></i>
+                    {% else %}
+                        <i class="fas fa-times"></i>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Comments' %}</th>
+                <td>{{ company.comments }}</td>
+            </tr>                    
+        </tbody>
+    </table>
+</div>
+
+<br><br>
+
+<div class="table-responsive">
+    <table class="table companydetailtable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" colspan="2"><span style="font-size: 22px;">{% trans 'Corresponding User' %}</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">{% trans 'E-Mail' %}</th>
+                <td>{{ company_user.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Verified' %}</th>
+                <td>
+                    {% if company_user.is_active %}
+                        <i class="fas fa-check"></i>
+                    {% else %}
+                        <i class="fas fa-times"></i>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Registered' %}</th>
+                <td>{{ company_user.date_joined }}</td>
+            </tr>    
+            <tr>
+                <th scope="row">{% trans 'Last Online' %}</th>
+                <td>{{ company_user.last_login }}</td>
+            </tr>                    
+        </tbody>
+    </table>
+</div>
+
+    
+{% endblock %}

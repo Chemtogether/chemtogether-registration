@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block content_body %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>{% trans 'Profile Viewer' %}</h1> 
+        {% trans 'The profile corresponding to user' %} <b>{{ user.email }}</b> {% trans 'looks like:' %}
+    </div>
+</div>
+<br><br>
+<div class="row">
+    <div class="col-md-12">
+        {% include 'profiles/staff_profile.html' with staff=representative %}
+    </div>
+</div>
+    
+{% endblock %}

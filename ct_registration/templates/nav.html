@@ -16,9 +16,13 @@
                         <a class="nav-link" href="/">{% trans 'Overview' %}</a>
                     </li>
                     {% if user.is_authenticated and user.is_staffmember %}
-                        {% url 'basic:home' as url %}
+                        {% url 'profiles:companylist' as url %}
                         <li class="nav-item {% if request.path == url %}active{% endif %}">
                             <a class="nav-link" href="{{ url }}">{% trans 'Company List' %}</a>
+                        </li>
+                        {% url 'profiles:userlist' as url %}
+                        <li class="nav-item {% if request.path == url %}active{% endif %}">
+                            <a class="nav-link" href="{{ url }}">{% trans 'User List' %}</a>
                         </li>
                         {% url 'profiles:representative' as url %}
                         <li class="nav-item {% if request.path == url %}active{% endif %}">

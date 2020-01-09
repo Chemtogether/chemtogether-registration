@@ -1,0 +1,310 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block content_body %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>{% trans 'User List' %}</h1>
+        {% trans 'List of all users registered on this site ordered by their role. There are:' %} 
+        <br><br>
+        <table class="table table-borderless" style="width: auto !important;">
+            <tbody>
+                <tr>
+                    <td class="align-middle">{% trans 'Company: not applied' %}</td>
+                    <td class="align-middle">{{ companies_notapplied|length }}</td>
+                    <td class="align-middle"><a href="#companies_notapplied" type="button" class="btn btn-outline-secondary">Jump</a></td>
+                </tr>
+                <tr>
+                    <td class="align-middle">{% trans 'Company: applied' %}</td>
+                    <td class="align-middle">{{ companies_applied|length }}</td>
+                    <td class="align-middle"><a href="#companies_applied" type="button" class="btn btn-outline-secondary">Jump</a></td>
+                </tr>
+                <tr>
+                    <td class="align-middle">{% trans 'Company: accepted' %}</td>
+                    <td class="align-middle">{{ companies_accepted|length }}</td>
+                    <td class="align-middle"><a href="#companies_accepted" type="button" class="btn btn-outline-secondary">Jump</a></td>
+                </tr>
+                <tr>
+                    <td class="align-middle">{% trans 'Staff' %}</td>
+                    <td class="align-middle">{{ staff_accounts }}</td>
+                    <td class="align-middle"><a href="#staff" type="button" class="btn btn-outline-secondary">Jump</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+    </div>
+</div>
+<br>
+
+{% if companies_accepted %}
+<div class="row" id="companies_accepted">
+    <div class="col-md-12">
+        <h2>{% trans 'Companies: Accepted' %}</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover usertable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Mail Address</th>
+                    <th scope="col">Verified</th>
+                    <th scope="col">Registered</th>
+                    <th scope="col">Last Online</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in companies_accepted %}
+                        <tr>
+                            <td class="align-middle">{{ user.email }}</td>
+                            <td class="align-middle">
+                                {% if user.is_active %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-times"></i>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">{{ user.date_joined }}</td>
+                            <td class="align-middle">{{ user.last_login }}</td>
+                            <td class="align-middle">
+                                <a href="" type="button" class="btn btn-primary">View Company</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endif %}
+
+
+{% if companies_applied %}
+<div class="row" id="companies_applied">
+    <div class="col-md-12">
+        <h2>{% trans 'Companies: Applied' %}</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover usertable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Mail Address</th>
+                    <th scope="col">Verified</th>
+                    <th scope="col">Registered</th>
+                    <th scope="col">Last Online</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in companies_applied %}
+                        <tr>
+                            <td class="align-middle">{{ user.email }}</td>
+                            <td class="align-middle">
+                                {% if user.is_active %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-times"></i>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">{{ user.date_joined }}</td>
+                            <td class="align-middle">{{ user.last_login }}</td>
+                            <td class="align-middle">
+                                <a href="" type="button" class="btn btn-primary">View Application</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endif %}
+
+
+{% if companies_notapplied %}
+<div class="row" id="companies_notapplied">
+    <div class="col-md-12">
+        <h2>{% trans 'Companies: Not Applied' %}</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover usertable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Mail Address</th>
+                    <th scope="col">Verified</th>
+                    <th scope="col">Registered</th>
+                    <th scope="col">Last Online</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in companies_notapplied %}
+                        <tr>
+                            <td class="align-middle">{{ user.email }}</td>
+                            <td class="align-middle">
+                                {% if user.is_active %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-times"></i>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">{{ user.date_joined }}</td>
+                            <td class="align-middle">{{ user.last_login }}</td>
+                            <td class="align-middle">
+                                <button type="button" class="btn btn-outline-primary disabled" disabled>No Application</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endif %}
+
+
+
+<span id="staff"></span>
+{% if staff_viewer %}
+<div class="row" id="staff_viewer">
+    <div class="col-md-12">
+        <h2>{% trans 'Staff: Viewer' %}</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover usertable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Mail Address</th>
+                    <th scope="col">Verified</th>
+                    <th scope="col">Registered</th>
+                    <th scope="col">Last Online</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in staff_viewer %}
+                        <tr>
+                            <td class="align-middle">{{ user.email }}</td>
+                            <td class="align-middle">
+                                {% if user.is_active %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-times"></i>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">{{ user.date_joined }}</td>
+                            <td class="align-middle">{{ user.last_login }}</td>
+                            <td class="align-middle">
+                                {% if user.is_staffmember_has_profile %}
+                                    <a href="{% url 'profiles:staffdetail' id=user.pk %}" type="button" class="btn btn-primary">View Profile</a>
+                                {% else %}
+                                    <button type="button" class="btn btn-outline-primary disabled" disabled>No Profile</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endif %}
+
+
+{% if staff_moderator %}
+<div class="row" id="staff_moderator">
+    <div class="col-md-12">
+        <h2>{% trans 'Staff: Moderator' %}</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover usertable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Mail Address</th>
+                    <th scope="col">Verified</th>
+                    <th scope="col">Registered</th>
+                    <th scope="col">Last Online</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in staff_moderator %}
+                        <tr>
+                            <td class="align-middle">{{ user.email }}</td>
+                            <td class="align-middle">
+                                {% if user.is_active %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-times"></i>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">{{ user.date_joined }}</td>
+                            <td class="align-middle">{{ user.last_login }}</td>
+                            <td class="align-middle">
+                                {% if user.is_staffmember_has_profile %}
+                                <a href="{% url 'profiles:staffdetail' id=user.pk %}" type="button" class="btn btn-primary">View Profile</a>
+                                {% else %}
+                                    <button type="button" class="btn btn-outline-primary disabled" disabled>No Profile</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endif %}
+
+{% if staff_admin %}
+<div class="row" id="staff_admin">
+    <div class="col-md-12">
+        <h2>{% trans 'Staff: Admin' %}</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover usertable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Mail Address</th>
+                    <th scope="col">Verified</th>
+                    <th scope="col">Registered</th>
+                    <th scope="col">Last Online</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in staff_admin %}
+                        <tr>
+                            <td class="align-middle">{{ user.email }}</td>
+                            <td class="align-middle">
+                                {% if user.is_active %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-times"></i>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">{{ user.date_joined }}</td>
+                            <td class="align-middle">{{ user.last_login }}</td>
+                            <td class="align-middle">
+                                {% if user.is_staffmember_has_profile %}
+                                <a href="{% url 'profiles:staffdetail' id=user.pk %}" type="button" class="btn btn-primary">View Profile</a>
+                                {% else %}
+                                    <button type="button" class="btn btn-outline-primary disabled" disabled>No Profile</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endif %}
+
+
+{% endblock %}

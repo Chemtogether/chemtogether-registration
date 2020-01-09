@@ -1,0 +1,106 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+{% block content_body %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>{% trans 'Company List' %}</h1>
+        {% trans 'List of all companies registered on this site ordered by their role. There are:' %} 
+        <br><br>
+        <table class="table table-borderless" style="width: auto !important;">
+            <tbody>
+                <tr>
+                    <td class="align-middle">{% trans 'Accepted Companies' %}</td>
+                    <td class="align-middle">{{ companies_accepted|length }}</td>
+                    <td class="align-middle"><a href="#companies_accepted" type="button" class="btn btn-outline-secondary">Jump</a></td>
+                </tr>
+                <tr>
+                    <td class="align-middle">{% trans 'Open Applications' %}</td>
+                    <td class="align-middle">{{ companies_applied|length }}</td>
+                    <td class="align-middle"><a href="#companies_applied" type="button" class="btn btn-outline-secondary">Jump</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+    </div>
+</div>
+<br>
+
+{% if companies_accepted %}
+<div class="row" id="companies_accepted">
+    <div class="col-md-12">
+        <h2>{% trans 'Accepted Companies' %}</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover usertable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Day</th>
+                    <th scope="col">Package</th>
+                    <th scope="col">Staff</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for company in companies_accepted %}
+                        <tr>
+                            <td class="align-middle">{{ company.title }}</td>
+                            <td class="align-middle">{{ company.get_day_display }}</td>
+                            <td class="align-middle">{{ company.get_package_display }}</td>
+                            <td class="align-middle">{{ company.staff_user }}</td>
+                            <td class="align-middle">
+                                <a href="{% url 'profiles:companydetail' id=company.pk %}" type="button" class="btn btn-primary">Details</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endif %}
+
+
+{% if companies_applied %}
+<div class="row" id="companies_accepted">
+    <div class="col-md-12">
+        <h2>{% trans 'Open Applications' %}</h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover usertable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Day</th>
+                    <th scope="col">Package</th>
+                    <th scope="col">Staff</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for company in companies_applied %}
+                        <tr>
+                            <td class="align-middle">{{ company.title }}</td>
+                            <td class="align-middle">{{ company.get_day_display }}</td>
+                            <td class="align-middle">{{ company.get_package_display }}</td>
+                            <td class="align-middle">{{ company.staff_user }}</td>
+                            <td class="align-middle">
+                                <a href="{% url 'profiles:companydetail' id=company.pk %}" type="button" class="btn btn-primary">Details</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endif %}
+
+
+
+{% endblock %}

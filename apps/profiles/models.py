@@ -76,8 +76,8 @@ class Representative(models.Model):
     )
 
     def delete(self, *args, **kwargs):
-        if not self.staff_user.demote_to_staff_without_profile():
-            logger.error("Demotion of staff %s to staff without profile failed." % self.title)
+        self.staff_user.has_profile = False
+        self.staff_user.save()
         return super(Representative, self).delete(*args, **kwargs)
 
     def __str__(self):
