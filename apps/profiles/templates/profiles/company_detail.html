@@ -12,6 +12,34 @@
 </div>
 <br><br>
 
+{% if assign_staff_form or accept_company_form %}
+<div class="table-responsive">
+    <table class="table companydetailadmintable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" colspan="2"><span style="font-size: 22px;">{% trans 'Admin' %}</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% if assign_staff_form %}
+                <td>
+                    {% crispy assign_staff_form %}
+                </td>
+                {% endif %}
+                {% if accept_company_form %}
+                <td>
+                    {% crispy accept_company_form %}
+                </td>
+                {% endif %}
+            </tr>            
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<br><br>
+
 <div class="table-responsive">
     <table class="table companydetailtable">
         <thead class="thead-dark">
@@ -39,15 +67,6 @@
         </tbody>
     </table>
 </div>
-
-{% if assign_staff_form %}
-    {% crispy assign_staff_form %}
-{% endif %}
-
-
-{% if accept_company_form %}
-    {% crispy accept_company_form %}
-{% endif %}
 
 <br><br>
 
