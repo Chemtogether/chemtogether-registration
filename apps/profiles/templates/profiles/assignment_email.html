@@ -1,0 +1,9 @@
+{% autoescape off %}
+Hey {{ staff.first_name }}
+
+You have been assigned as person of contact for the company "{{ company.title }}" by {{ admin.first_name }}.
+This mail is just for information. You will be notified if {{ company.title }} has been accepted and action is required from you. 
+
+Sincerely,
+Chemtogether Registration Platform on behalf of {{ admin.first_name }} {{ admin.last_name }}
+{% endautoescape %}

@@ -138,6 +138,32 @@
     <table class="table companydetailtable">
         <thead class="thead-dark">
             <tr>
+                <th scope="col" colspan="2"><span style="font-size: 22px;">{% trans 'Application Timestamps' %}</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">{% trans 'First Application' %}</th>
+                <td>{{ company.date_of_first_application }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Last Application Update' %}</th>
+                <td>{{ company.date_of_last_application }}</td>
+            </tr>     
+            <tr>
+                <th scope="row">{% trans 'Application Accepted' %}</th>
+                <td>{{ company.date_of_accepted_application }}</td>
+            </tr>                     
+        </tbody>
+    </table>
+</div>
+
+<br><br>
+
+<div class="table-responsive">
+    <table class="table companydetailtable">
+        <thead class="thead-dark">
+            <tr>
                 <th scope="col" colspan="2"><span style="font-size: 22px;">{% trans 'Corresponding User' %}</span></th>
             </tr>
         </thead>

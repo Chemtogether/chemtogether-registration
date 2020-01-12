@@ -1,0 +1,18 @@
+{% autoescape off %}
+<b>Application Details:</b>
+
+Company Title: {{ company.title }}
+Day of Attendance: {{ company.get_day_display }}
+Fair Package: {{ company.get_package_display }}
+Correspondence Full Name: {{ company.first_name }} {{ company.last_name }}
+Correspondence Mail Address: {{ company.email }}
+Correspondence Phone Number: {{ company.phone_number }}
+Correspondence Language: {{ company.get_language_display }}
+Mailing Address: {{ company.mailing_address }}
+Billing Address: {{ company.billing_address }}
+Comments: {{ company.comments }}
+
+
+Sincerely,
+Chemtogether Registration Platform
+{% endautoescape %}

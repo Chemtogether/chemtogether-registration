@@ -1,11 +1,12 @@
 import logging
-
+import datetime
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.forms.models import model_to_dict
 from django.contrib import messages
-
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
 from .forms import ApplicationForm, RepresentativeForm, AssignStaffForm, AcceptCompanyForm
 from apps.accounts.models import User
@@ -55,11 +56,36 @@ def FairApplication_Form(request, existing_profile = None):
                 else:
                     messages.add_message(request, messages.INFO, 'Your application was successfully submitted. Note that your application is not a fixed registration to the event. Your registration is only valid after confirmation and explicit acceptance of your application in written form by us.')
                     company.save()
+
+                    # Send mail to acquisition team
+                    mail_subject = 'New Application from %s' % company.title
+
+                    message = render_to_string('profiles/application_email.html', {
+                        'company': company,
+                    })
+                    email = EmailMessage(
+                        mail_subject, message, to=['acquisition@chemtogether.ethz.ch']
+                    )
+                    email.send()
+
                     return redirect('basic:home')
             else:
-                    messages.add_message(request, messages.INFO, 'Your application was successfully updated.')
-                    company.save()
-                    return redirect('profiles:application')
+                messages.add_message(request, messages.INFO, 'Your application was successfully updated.')
+                company.date_of_last_application = datetime.datetime.now()
+                company.save()
+
+                # Send mail to acquisition team
+                mail_subject = 'Updated Application from %s' % company.title
+
+                message = render_to_string('profiles/application_email.html', {
+                    'company': company,
+                })
+                email = EmailMessage(
+                    mail_subject, message, to=['acquisition@chemtogether.ethz.ch']
+                )
+                email.send()
+
+                return redirect('profiles:application')
 
         else:
             logger.error(form.errors)
@@ -271,10 +297,19 @@ def CompanyDetail(request, id):
         context = {'company': this_company, 'company_user': this_company.company_user, 'staff': this_company.staff_user}
 
         if request.user.is_staffmember_is_admin:
-            context.update({
-                'assign_staff_form': AssignStaffForm(initial={'company': id}),
-                'accept_company_form': AcceptCompanyForm(initial={'company': id})
-            })
+            if this_company.staff_user is None:
+                context.update({
+                    'assign_staff_form': AssignStaffForm(initial={'company': id}),
+                })
+            else:
+                context.update({
+                    'assign_staff_form': AssignStaffForm(initial={'company': id, 'staff': this_company.staff_user.pk}),
+                })
+
+            if not this_company.company_user.is_company_is_accepted() and this_company.staff_user is not None:
+                context.update({
+                    'accept_company_form': AcceptCompanyForm(initial={'company': id}),
+                })
 
         return render(request, 'profiles/company_detail.html', context)
 
@@ -302,6 +337,19 @@ def CompanyDetail_AssignStaffForm(request):
                 company.staff_user = staff
                 company.save()
                 messages.add_message(request, messages.INFO, 'Staff assignment was successful.')
+
+                # Send mail to assigned staff
+                mail_subject = 'You have been assigned to company "%s"' % company.title
+                message = render_to_string('profiles/assignment_email.html', {
+                    'admin': request.user.profile.get(),
+                    'company': company,
+                    'staff': staff,
+                })
+                email = EmailMessage(
+                    mail_subject, message, to=[staff.email], cc=[request.user.email]
+                )
+                email.send()
+
                 return redirect('profiles:companydetail', id=company.pk)
 
             else:
@@ -335,8 +383,25 @@ def CompanyDetail_AcceptCompanyForm(request):
 
                 if check == company.title:
                     if company.company_user.promote_to_accepted_company():
+                        
+                        staff = company.staff_user
+
+                        # Send mail to assigned staff
+                        mail_subject = 'You have been assigned to company "%s"' % company.title
+
+                        message = render_to_string('profiles/acceptedcompany_email.html', {
+                            'company': company,
+                            'staff': staff,
+                        })
+                        email = EmailMessage(
+                            mail_subject, message, to=[company.email], cc=[staff.email], bcc=[request.user.email]
+                        )
+                        email.send()
+
                         company.company_user.save()
-                        messages.add_message(request, messages.INFO, 'Company was successfully accepted.')
+                        company.date_of_accepted_application = datetime.datetime.now()
+                        company.save()
+                        messages.add_message(request, messages.INFO, 'Company was successfully accepted and mail was sent.')
                         return redirect('profiles:companydetail', id=company.pk)
 
                     else:

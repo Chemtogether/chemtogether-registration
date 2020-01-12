@@ -108,8 +108,8 @@ class Company(models.Model):
     day = models.IntegerField(
         verbose_name = _('day of the fair'),
         choices =  (
-            (1, _("Tuesday")),
-            (2, _("Wednesday")),
+            (1, _("Tuesday, November 3rd")),
+            (2, _("Wednesday, November 2nd")),
         ),
         help_text = _('Day of the fair on which your company will attend.'),
     )
@@ -178,6 +178,26 @@ class Company(models.Model):
         verbose_name = _('comments'),
         blank = True,
         help_text = _('Additional comments. Optional.'),
+    )
+
+    date_of_first_application = models.DateTimeField(
+        verbose_name = _('first application'),
+        auto_now_add = True,
+        help_text = _('Date when the first application of this company was created.'),
+    )
+
+    date_of_last_application = models.DateTimeField(
+        verbose_name = _('last application'),
+        auto_now_add = True,
+        help_text = _('Date when the application of this company was last updated.'),
+    )
+
+    date_of_accepted_application = models.DateTimeField(
+        verbose_name = _('application accepted'),
+        null = True,
+        blank = True,
+        default = None,
+        help_text = _('Date when the application of this company was accepted.'),
     )
 
     staff_user = models.ForeignKey(

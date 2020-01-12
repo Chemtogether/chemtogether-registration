@@ -1,0 +1,30 @@
+{% autoescape off %}
+Dear {{ company.first_name }} {{ company.last_name }}
+
+Your application for the Chemtogether Career Fair on behalf of {{ company.title }} with a {{ company.get_package_display }} on {{ company.get_day_display }} has been accepted. The registration for {{ company.title }} as a participant of the fair is now binding and subject to the Terms of Service (see https://registration.chemtogether.ethz.ch/static/files/tos.pdf) which you accepted during the application process.
+In the following, you will find information on your person of contact and a copy of your registration details.
+
+<b>Your person of contact at Chemtogether:</b>
+{{ staff.first_name }} {{ staff.last_name }}
+{{ staff.email }}
+{{ staff.phone_number }}
+
+If you have any requestion or need additional information, please contact {{ staff.first_name }} {{ staff.last_name }}. {{ staff.first_name }} will also get in contact with you as soon as possible.
+
+
+<b>Copy of your registration details for Chemtogether:</b>
+Company Title: {{ company.title }}
+Day of Attendance: {{ company.get_day_display }}
+Fair Package: {{ company.get_package_display }}
+Correspondence Full Name: {{ company.first_name }} {{ company.last_name }}
+Correspondence Mail Address: {{ company.email }}
+Correspondence Phone Number: {{ company.phone_number }}
+Correspondence Language: {{ company.get_language_display }}
+Mailing Address: {{ company.mailing_address }}
+Billing Address: {{ company.billing_address }}
+Comments: {{ company.comments }}
+
+
+Sincerely,
+Chemtogether Registration Platform on behalf of {{ staff.first_name }} {{ staff.last_name }}
+{% endautoescape %}

@@ -5,6 +5,10 @@ from .local_settings import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# designate admin mailing addresses
+ADMINS = [('Chemtogether Webmaster', 'webmaster@chemtogether.ethz.ch')]
+SERVER_EMAIL = 'registration.platform.django@chemtogether.ethz.ch'
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -132,6 +136,9 @@ LOGGING = {
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
         },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
     },
     'handlers': {
         'console': {
@@ -148,13 +155,14 @@ LOGGING = {
         },
         'mail_admins': {
             'level': 'ERROR',
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
             'formatter': 'verbose'
         }
     },
     'loggers': {
         'django': {
-            'handlers': ['console','mail_admins'],
+            'handlers': ['console', 'mail_admins', 'file'],
             'level': 'ERROR',
             'propagate': True,
         },
