@@ -66,7 +66,7 @@
                             <td class="align-middle">{{ user.date_joined }}</td>
                             <td class="align-middle">{{ user.last_login }}</td>
                             <td class="align-middle">
-                                <a href="" type="button" class="btn btn-primary">View Company</a>
+                                <a href="{% url 'profiles:companydetail' id=user.company.get.pk %}" type="button" class="btn btn-primary">View Company</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -109,7 +109,7 @@
                             <td class="align-middle">{{ user.date_joined }}</td>
                             <td class="align-middle">{{ user.last_login }}</td>
                             <td class="align-middle">
-                                <a href="" type="button" class="btn btn-primary">View Application</a>
+                                <a href="{% url 'profiles:companydetail' id=user.company.get.pk %}" type="button" class="btn btn-primary">View Application</a>
                             </td>
                         </tr>
                     {% endfor %}

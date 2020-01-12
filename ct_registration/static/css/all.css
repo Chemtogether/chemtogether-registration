@@ -72,6 +72,19 @@
     width: 225px !important;
 }
 
+.companydetailadmintable td {
+    width: 50% !important;
+}
+
+.companydetailadmintable td form {
+    align-items: center;
+    justify-content: center;
+}
+
+.companydetailadmintable td form * {
+    margin: 10px;
+}
+
 table .thead-dark th {
     background-color: #2b2b2b !important;
     border-color: #2b2b2b !important;
