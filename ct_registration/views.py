@@ -34,10 +34,14 @@ def signup(request):
                 user.is_active = False
 
                 # automatic staff account creation based on email domain
-                if global_preferences['account_creation__staff_account_domain_enabled'] and re.search("@.+", email).group(0) == '@' + global_preferences['account_creation__staff_account_domain']:
-                    prefix = re.search("^.+@", email).group(0)[0:-1]
-                    if not global_preferences['account_creation__staff_account_whitelist'] or prefix in global_preferences['account_creation__staff_account_whitelist'].split(','):
-                        user.role = -1
+                try:
+                    if global_preferences['account_creation__staff_account_domain_enabled'] and re.search("@.+", email).group(0) == '@' + global_preferences['account_creation__staff_account_domain']:
+                        prefix = re.search("^.+@", email).group(0)[0:-1]
+                        if not global_preferences['account_creation__staff_account_whitelist'] or prefix in global_preferences['account_creation__staff_account_whitelist'].split(','):
+                            user.role = -1
+                except:
+                    messages.add_message(request, messages.WARNING, 'You are not whitelisted for a staff account, or there was an error.')
+                    logger.error("User %s failed due to not being whitelisted or there was an error." % email)
                     
 
                 # save user and send verification email
