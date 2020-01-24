@@ -39,6 +39,7 @@ def signup(request):
                         prefix = re.search("^.+@", email).group(0)[0:-1]
                         if not global_preferences['account_creation__staff_account_whitelist'] or prefix in global_preferences['account_creation__staff_account_whitelist'].split(','):
                             user.role = -1
+                            logger.info("Recognized email %s as staff account." % email)
                 except:
                     messages.add_message(request, messages.WARNING, 'You are not whitelisted for a staff account, or there was an error.')
                     logger.error("User %s failed due to not being whitelisted or there was an error." % email)
@@ -75,6 +76,7 @@ def activate(request, uidb64, token):
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        logger.error("Activation of unknown user requested.")
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         # url token was valid, activate user and log in
@@ -84,4 +86,5 @@ def activate(request, uidb64, token):
         messages.add_message(request, messages.INFO, 'Your account was successfully verified. You have been logged in.')
         return redirect('/')
     else:
+        logger.error("Verification of user %s failed" % user)
         return render(request, 'registration/signup_invalid.html')
