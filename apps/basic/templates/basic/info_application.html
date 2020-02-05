@@ -8,20 +8,19 @@
 {% endblock add_foot %}
 
 {% block content_body %}
-<div class="jumbotron bootstrap-override">
     <h1 class="display-6">
         {% trans 'Information on the Application Process' %}
     </h1>
-    <p class="lead">
-        {% trans '(1) Sign up as a new company by clicking the “Signup” button on this webpage or use your last year´s login via “Login”. If you have forgotten your user data, please ask directly at webmaster@chemtogether.ethz.ch.' %}
-        <br>
-        {% trans '(2) Under “To application form” you can register for this year’s Chemtogether until the 22nd of May 2020. Select the date of participation, the choice of your package and enter your contact data.' %}
-        <br>
-        {% trans '(3) Review your booking and confirm your intention to participate in 2020 by accepting the terms and conditions. You will receive a confirmation of your registration by email via one of our team members.' %}
-        <br>
-        {% trans 'Should there be any problems during the registration process, please contact us in writing acquisition@chemtogether.ethz.ch or your assigned personal contact person after application.' %}
+    <br>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">1. Sign up as a new company by clicking the “Signup” button on this webpage or use your last year´s login via “Login”. If you have forgotten your user data, please ask directly at <a href="mailto:webmaster@chemtogether.ethz.ch">webmaster@chemtogether.ethz.ch</a>.</li>
+        <li class="list-group-item">2. Under “To application form” you can register for this year’s Chemtogether until May 22<sup>nd</sup> 2020. Select the date of participation, the package of your choice and enter your contact data.</li>
+        <li class="list-group-item">3. Review your booking and confirm your intention to participate in 2020 by accepting the <a href="/static/files/tos.pdf">terms of service</a>. You will receive a confirmation of your registration by email via one of our team members.</li>
+    </ul>
+    <br>
+    <p> 
+        {% trans 'Should there be any problems during the registration process, please contact us at <a href="mailto:acquisition@chemtogether.ethz.ch">acquisition@chemtogether.ethz.ch</a> or write to your assigned personal contact person after application.' %}
     </p>
-</div>
 
 <br> <br>
 {% endblock content_body %}
