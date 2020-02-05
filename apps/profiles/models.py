@@ -171,7 +171,7 @@ class Company(models.Model):
     accepts_tos = models.BooleanField(
         verbose_name = _('I accept the terms of service'),
         blank = False,
-        help_text = _('You must accept the <a href="https://registration.chemtogether.ethz.ch/static/files/tos.pdf" target="_blank">terms of service</a> to apply.'),
+        help_text = _('You must accept the <a href="https://registration.chemtogether.ethz.ch/static/files/tos.pdf" target="_blank">terms of service</a> to apply. The terms of service are only available in german.'),
     )
 
     comments = models.TextField(
