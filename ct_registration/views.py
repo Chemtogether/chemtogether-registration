@@ -70,7 +70,25 @@ def signup(request):
         return render(request, 'registration/signup_closed.html')
 
 
+
 def activate(request, uidb64, token):
+    """ Allows the user to proceed to account verification with confirm. """
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        logger.error("Activation of unknown user requested.")
+        user = None
+
+    if user is not None:
+        logger.info("Verification of user %s can proceed." % user)
+        return render(request, 'registration/signup_forward_to_activation.html', {'uidb64': uidb64, 'token': token})
+    else:
+        logger.error("Attempt to forward to verification of user %s failed because user is none" % user)
+        return render(request, 'registration/signup_invalid.html')
+
+
+def confirm(request, uidb64, token):
     """ Uses the token in the url send to the user to verify user email. """
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -78,13 +96,27 @@ def activate(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         logger.error("Activation of unknown user requested.")
         user = None
+
+
+    if user is not None and user.is_active:
+        # user is already verified, forward to login
+        logger.info("Verification of user %s skipped because it was already verified." % user)
+        messages.add_message(request, messages.INFO, 'Your account is verified. Please log in.')
+        return redirect('/login')
+
     if user is not None and account_activation_token.check_token(user, token):
         # url token was valid, activate user and log in
         user.is_active = True
         user.save()
-        login(request, user)
-        messages.add_message(request, messages.INFO, 'Your account was successfully verified. You have been logged in.')
-        return redirect('/')
-    else:
-        logger.error("Verification of user %s failed" % user)
+        #login(request, user)
+        logger.info("Verification of user %s succeeded." % user)
+        messages.add_message(request, messages.INFO, 'Your account was successfully verified. You may log in now.')
+        return redirect('/login')
+
+    if user is None:
+        logger.error("Verification of user %s failed because user is none" % user)
         return render(request, 'registration/signup_invalid.html')
+    else:
+        logger.error("Verification of inactive user %s failed because token check failed" % user)
+        messages.add_message(request, messages.INFO, 'Your account is verified. Please log in.')
+        return redirect('/login')

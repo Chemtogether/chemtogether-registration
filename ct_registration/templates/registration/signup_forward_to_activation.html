@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block content_body %}
+<div class="row">
+    <div  class="col-md-12">
+        <h1>{% trans 'Please click below to activate your account' %}</h1>
+        <br>
+        <p>
+            {% trans 'After verifying your account by clicking below, you will be forwarded to the login page to enter your credentials.' %} {% trans 'If you have any trouble setting up your account, contact us at' %} <a href="mailto:info@chemtogether.ethz.ch">info@chemtogether.ethz.ch</a>.
+        </p>
+        <br>
+        <br>
+        <div class="text-center">
+            <a href="{% url 'confirm' uidb64=uidb64 token=token %}" type="button" class="btn btn-primary btn-lg" style="margin-left: auto; margin-right: auto;">
+                {% trans 'Verify your account now' %}
+            </a>
+        </div>
+        <br>
+    </div>
+</div>
+{% endblock %}

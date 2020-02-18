@@ -236,7 +236,7 @@ def StaffDetail(request, id):
         try:
             context = {
                 'representative': this_user.profile.get(),
-                'user': this_user
+                'that_user': this_user
                 }
         except:
             logger.exception("User %s does not have a profile, but is was requested." % this_user)
