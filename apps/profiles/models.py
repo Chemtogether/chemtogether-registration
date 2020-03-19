@@ -109,7 +109,7 @@ class Company(models.Model):
         verbose_name = _('day of the fair'),
         choices =  (
             (1, _("Tuesday, November 3rd")),
-            (2, _("Wednesday, November 2nd")),
+            (2, _("Wednesday, November 4th")),
         ),
         help_text = _('Day of the fair on which your company will attend.'),
     )
