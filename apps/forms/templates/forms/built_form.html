@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<br>
+<h1>{{ form.title }}</h1>
+
+<h4 class="text-muted">
+    {% if form.expiry_date %}
+        Deadline: {{ form.expiry_date|date:'l, d.m.y, H:i (T)' }}
+    {% else %}
+        No deadline
+    {% endif %}
+</h4>
+
+{% if form.description %}
+<br>
+<p>{{ form.description }}</p>
+{% endif %}
+
+<br>
+
+{{ form_for_form.media }}
+<form action="{{ form.get_absolute_url }}" method="post" {% if form_for_form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+    {% csrf_token %}
+    {{ form_for_form|crispy }}
+    <br>
+    {% if not form_expired %}
+        {% if status_published %}
+            <button type="submit" name="publish" class="btn btn-primary">Save and resubmit</button>
+        {% else  %}
+            <button type="submit" name="save_draft" class="btn btn-primary" formnovalidate>Save as draft</button> <button type="submit" name="publish" class="btn btn-primary">Save and submit</button>
+        {% endif %}
+    {% else %}
+    <button type="button" class="btn btn-primary" disabled>Submission has ended</button>
+    {% endif %}
+</form>

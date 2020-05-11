@@ -14,15 +14,23 @@
 		{% trans 'Your company was accepted for Chemtogether 2020' %}
 	</h1>
     <p class="lead">		
-		{% trans 'Your application to participate in Chemtogether 2020 was accepted. Your registration was successful and is now binding. If you have any questions or wishes, please do not hesitate to contact your personal manager below.' %}
+		{% trans 'Your application to participate in Chemtogether 2020 was accepted. Your registration was successful and is now binding. Please full out any remaining forms in your To Do list below. New items may be added to the To Do list in the future. If you have any questions or wishes, please do not hesitate to contact your person of contact, as shown at the bottom.' %}
     </p>
     <hr class="my-4">
 </div>
 
 <br>
 
+
+
+<h2>{% trans "To Do's" %}</h2><br>
+{% include 'forms/to_do_list.html' with data=to_dos %}
+
+<br><br><br>
+
 <h2>{% trans 'Your person of contact' %}</h2><br>
 {% include 'profiles/staff_profile.html' with staff=representative %}
+
 
 
 <br>

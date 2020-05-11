@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block add_head %}
+{% endblock add_head %}
+
+{% block add_foot %}
+{% endblock add_foot %}
+
+{% block content_body %}
+{% load forms_builder_tags %}
+
+    {% render_built_form form %}
+    
+{% endblock content_body %}
