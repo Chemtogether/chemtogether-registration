@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 
 from django.utils import timezone
 from django.conf import settings
@@ -11,11 +12,13 @@ from django.template import RequestContext
 from django.utils.http import urlquote
 from django.views.generic.base import TemplateView
 from django.contrib import messages
+from django.core.files import File
 
 from .forms import FormForForm, FormEntry
 from .models import Form, STATUS_DRAFT, STATUS_PUBLISHED
 from .signals import form_invalid, form_valid
 from .utils import split_choices
+from . import fields
 
 
 logger = logging.getLogger("ct_registration.forms_builder.views")
@@ -99,6 +102,17 @@ class FormDetail(TemplateView):
         else:
             status = STATUS_PUBLISHED
 
+        previous_files = []
+        if FormEntry.objects.filter(author=request.user.company.get()).filter(form=form).all():
+            existing_fields = FormEntry.objects.filter(author=request.user.company.get()).filter(form=form).get().fields.all()
+
+            for field in form.fields.all():
+                if field.field_type == fields.FILE and field.slug in request.POST:
+                    value = existing_fields.filter(field_id=field.id).get().value
+                    previous_files.append({'slug': field.slug, 'id': field.id, 'value': value})
+                    if value:
+                        form_for_form.fields[field.slug].required = False
+
         if not form_for_form.is_valid():
             logger.debug("Form is invalid.")
             form_invalid.send(sender=request, form=form_for_form)
@@ -114,6 +128,12 @@ class FormDetail(TemplateView):
             except:
                 pass
             entry = form_for_form.save()
+
+            for previous_file in previous_files:
+                try:
+                    entry.fields.filter(field_id=previous_file['id']).update(value=previous_file['value'])
+                except Exception as e:
+                    logger.error(e)
 
             # assign user and form status
             entry.author = request.user.company.get()

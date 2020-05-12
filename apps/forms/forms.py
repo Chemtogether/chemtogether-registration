@@ -1,6 +1,7 @@
 from datetime import date, datetime
-from os.path import join, split
+from os.path import join, split, basename
 from uuid import uuid4
+import logging
 
 import django
 from django import forms
@@ -16,6 +17,8 @@ from .models import FormEntry, FieldEntry
 from . import settings
 from .utils import now, split_choices
 
+
+logger = logging.getLogger("ct_registration.forms_builder.views")
 
 fs = default_storage
 if settings.UPLOAD_ROOT is not None:
@@ -128,6 +131,10 @@ class FormForForm(forms.ModelForm):
         # If a FormEntry instance is given to edit, stores it's field
         # values for using as initial data.
         field_entries = {}
+        if context.get('form_expired'):
+            disabled = context["form_expired"]
+        else:
+            disabled = False
         if kwargs.get("instance"):
             for field_entry in kwargs["instance"].fields.all():
                 field_entries[field_entry.field_id] = field_entry.value
@@ -137,8 +144,9 @@ class FormForForm(forms.ModelForm):
             field_key = field.slug
             field_class = fields.CLASSES[field.field_type]
             field_widget = fields.WIDGETS.get(field.field_type)
+
             field_args = {"label": field.label, "required": field.required,
-                          "help_text": field.help_text, "disabled": context['form_expired']}
+                          "help_text": field.help_text, "disabled": disabled}
             arg_names = field_class.__init__.__code__.co_varnames
             if "max_length" in arg_names:
                 field_args["max_length"] = settings.FIELD_MAX_LENGTH
@@ -178,6 +186,14 @@ class FormForForm(forms.ModelForm):
                 if field.field_type == fields.CHECKBOX:
                     initial_val = initial_val != "False"
                 self.initial[field_key] = initial_val
+
+            file_field_prepopulated = False
+            if (field.field_type == fields.FILE) and initial_val:
+                file_field_prepopulated = True
+                selected_file = "Previously uploaded and saved: <a target=_blank href='/media/%s'>%s</a>" % (initial_val, basename(initial_val))
+                field_args['help_text'] = "<strong>" + selected_file + "</strong><br>" + field_args['help_text']
+
+
             self.fields[field_key] = field_class(**field_args)
 
             if field.field_type == fields.DOB:
@@ -187,10 +203,11 @@ class FormForForm(forms.ModelForm):
 
             # Add identifying CSS classes to the field.
             css_class = field_class.__name__.lower()
+
             # Do not add the 'required' field to the CheckboxSelectMultiple because it will 
             # mean that all checkboxes have to be checked instead of the usual use case of
             # "at least one".  
-            if field.required and (field_widget != forms.CheckboxSelectMultiple):
+            if field.required and (field_widget != forms.CheckboxSelectMultiple) and not file_field_prepopulated:
                 css_class += " required"
                 if settings.USE_HTML5:
                     # Except Django version 1.10 this is necessary for all versions from 1.8 to 1.11.

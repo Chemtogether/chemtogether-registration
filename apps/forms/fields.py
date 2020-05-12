@@ -9,7 +9,7 @@ except ImportError:
     from django.forms.extras import SelectDateWidget
 from django.utils.translation import ugettext_lazy as _
 
-from .settings import USE_HTML5, EXTRA_FIELDS, EXTRA_WIDGETS
+from .settings import USE_HTML5
 from .utils import html5_field, import_attr
 
 
@@ -93,18 +93,3 @@ if USE_HTML5:
         NUMBER: html5_field("number", forms.TextInput),
         URL: html5_field("url", forms.TextInput),
     })
-
-# Add any custom fields defined.
-for field_id, field_path, field_name in EXTRA_FIELDS:
-    if field_id in CLASSES:
-        err = "ID %s for field %s in FORMS_EXTRA_FIELDS already exists"
-        raise ImproperlyConfigured(err % (field_id, field_name))
-    CLASSES[field_id] = import_attr(field_path)
-    NAMES += ((field_id, _(field_name)),)
-
-# Add/update custom widgets.
-for field_id, widget_path in EXTRA_WIDGETS:
-    if field_id not in CLASSES:
-        err = "ID %s in FORMS_EXTRA_WIDGETS does not match a field"
-        raise ImproperlyConfigured(err % field_id)
-    WIDGETS[field_id] = import_attr(widget_path)

@@ -17,7 +17,6 @@ from django.utils.translation import ungettext, ugettext_lazy as _
 from .forms import EntriesForm
 from .models import Form, Field, FormEntry, FieldEntry
 from .settings import CSV_DELIMITER, UPLOAD_ROOT
-from .settings import USE_SITES, EDITABLE_SLUGS
 from .utils import now, slugify
 
 
@@ -39,14 +38,12 @@ class FormAdmin(admin.ModelAdmin):
     fieldentry_model = FieldEntry
 
     inlines = (FieldAdmin,)
-    list_display = ("title", "status", "email_copies", "publish_date",
-                    "expiry_date", "total_entries", "admin_links")
+    list_display = ("title", "status", "publish_date", "expiry_date", "total_entries", "admin_links")
     list_display_links = ("title",)
-    list_editable = ("status", "email_copies", "publish_date", "expiry_date")
+    list_editable = ("status", "publish_date", "expiry_date")
     list_filter = ("status",)
     filter_horizontal = form_admin_filter_horizontal
-    search_fields = ("title", "intro", "response", "email_from",
-                     "email_copies")
+    search_fields = ("title", "description")
     radio_fields = {"status": admin.HORIZONTAL}
     fieldsets = form_admin_fieldsets
 
