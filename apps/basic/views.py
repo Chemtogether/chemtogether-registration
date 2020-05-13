@@ -41,7 +41,7 @@ def index(request):
             return render(request, 'basic/home_company_with_application.html', context=context)
         
         if request.user.is_company_is_accepted():
-            forms_to_fill_out = Form.objects.filter(status=STATUS_PUBLISHED).order_by("-publish_date", "-expiry_date", "title")
+            forms_to_fill_out = Form.objects.published().order_by("-publish_date", "-expiry_date", "title")
             forms_status = []
             for form in forms_to_fill_out:
                 try:

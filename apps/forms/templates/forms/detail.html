@@ -1,10 +1,12 @@
 {% extends 'main.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block add_head %}
 {% endblock add_head %}
 
 {% block add_foot %}
+    <script src="{% static 'js/max_length_indicator.js' %}"></script>
 {% endblock add_foot %}
 
 {% block content_body %}

@@ -93,6 +93,7 @@ class FormAdmin(admin.ModelAdmin):
         can_delete_entries = request.user.has_perm(delete)
         submitted = entries_form.is_valid() or show or export
         export = export or request.POST.get("export")
+        form_entries = FormEntry.objects.filter(form=form).all().order_by("-entry_time")
 
 
         if submitted:
@@ -135,7 +136,7 @@ class FormAdmin(admin.ModelAdmin):
                         info(request, message % {"count": count})
         template = "admin/forms/entries.html"
         context = {"title": _("View Entries"), "entries_form": entries_form,
-                   "opts": self.model._meta, "original": form,
+                   "opts": self.model._meta, "original": form, "form_entries": form_entries,
                    "can_delete_entries": can_delete_entries,
                    "submitted": submitted}
         return render(request, template, context)

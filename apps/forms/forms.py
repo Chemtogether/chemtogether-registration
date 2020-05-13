@@ -148,8 +148,15 @@ class FormForForm(forms.ModelForm):
             field_args = {"label": field.label, "required": field.required,
                           "help_text": field.help_text, "disabled": disabled}
             arg_names = field_class.__init__.__code__.co_varnames
+
+            extra_css_class = ""
+
             if "max_length" in arg_names:
-                field_args["max_length"] = settings.FIELD_MAX_LENGTH
+                if field.max_length:
+                    field_args["max_length"] = min(settings.FIELD_MAX_LENGTH, field.max_length)
+                    extra_css_class += " max_length_indicator" 
+                else:
+                    field_args["max_length"] = settings.FIELD_MAX_LENGTH
             if "choices" in arg_names:
                 choices = list(field.get_choices())
                 if field.field_type == fields.SELECT and not (field.required and field.default):
@@ -202,7 +209,7 @@ class FormForForm(forms.ModelForm):
                 self.fields[field_key].widget.years = years
 
             # Add identifying CSS classes to the field.
-            css_class = field_class.__name__.lower()
+            css_class = field_class.__name__.lower() + extra_css_class
 
             # Do not add the 'required' field to the CheckboxSelectMultiple because it will 
             # mean that all checkboxes have to be checked instead of the usual use case of
@@ -342,8 +349,7 @@ class EntriesForm(forms.Form):
         """
         for field_id in [f.id for f in self.form_fields] + [0]:
             prefix = "field_%s_" % field_id
-            fields = [f for f in super(EntriesForm, self).__iter__()
-                      if f.name.startswith(prefix)]
+            fields = [f for f in super(EntriesForm, self).__iter__() if f.name.startswith(prefix)]
             yield fields[0], fields[1], fields[2:]
 
     def posted_data(self, field):
@@ -362,8 +368,7 @@ class EntriesForm(forms.Form):
         """
         Returns the list of selected column names.
         """
-        fields = [f.label for f in self.form_fields
-                  if self.posted_data("field_%s_export" % f.id)]
+        fields = [f.label for f in self.form_fields if self.posted_data("field_%s_export" % f.id)]
         if self.posted_data("field_0_export"):
             fields.append(self.entry_time_name)
         return fields

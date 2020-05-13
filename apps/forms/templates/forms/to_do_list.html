@@ -29,6 +29,9 @@
                 {% if forloop.counter|divisibleby:2 %}
                     <div class="w-100"></div><br>
                 {% else %}
+                    {% if forloop.last %}
+                    <div class="col"></div>
+                    {% endif %}
                     <div class="w-100 d-lg-none"></div><br>
                 {% endif %}
             {%endfor%}

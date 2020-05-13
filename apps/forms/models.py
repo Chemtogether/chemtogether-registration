@@ -32,7 +32,6 @@ class FormManager(models.Manager):
             return self.all()
         filters = [
             Q(publish_date__lte=now()) | Q(publish_date__isnull=True),
-            Q(expiry_date__gte=now()) | Q(expiry_date__isnull=True),
             Q(status=STATUS_PUBLISHED),
         ]
         return self.filter(*filters)
@@ -98,10 +97,8 @@ class AbstractForm(models.Model):
             return True
         status = self.status == STATUS_PUBLISHED
         publish_date = self.publish_date is None or self.publish_date <= now()
-        expiry_date = self.expiry_date is None or self.expiry_date >= now()
-        authenticated = for_user is not None and for_user.is_authenticated
-        login_required = (not self.login_required or authenticated)
-        return status and publish_date and expiry_date and login_required
+        authenticated = for_user is not None and for_user.is_authenticated and for_user.is_company_is_accepted()
+        return status and publish_date and authenticated
 
     def total_entries(self):
         """
