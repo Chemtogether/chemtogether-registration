@@ -64,7 +64,6 @@ class AbstractForm(models.Model):
     email_copies = models.CharField(_("Additional BCC addresses"), blank=True, help_text=_("One or more email addresses, separated by commas."), max_length=200)
     email_subject = models.CharField(_("Subject"), max_length=200, blank=True, help_text=_("Subject header of the email."))
     email_message = models.TextField(_("Message"), blank=True, help_text=_("Body of the email."))
-    email_summary = models.BooleanField(_("Include summary"), default=True, help_text=_("If checked, the emails will contain a summary of the submitted form data at the end of the email."))
 
     objects = FormManager()
 

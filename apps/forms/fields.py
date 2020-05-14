@@ -29,24 +29,21 @@ HIDDEN = 12
 NUMBER = 13
 URL = 14
 DOB = 15
+INTEGER = 16
 
 # Names for all available field types.
 NAMES = (
     (TEXT, _("Single line text")),
     (TEXTAREA, _("Multi line text")),
     (EMAIL, _("Email")),
-    (NUMBER, _("Number")),
+    (NUMBER, _("Decimal number")),
+    (INTEGER, _("Integer number")),
     (URL, _("URL")),
     (CHECKBOX, _("Check box")),
     (CHECKBOX_MULTIPLE, _("Check boxes")),
     (SELECT, _("Drop down")),
-    (SELECT_MULTIPLE, _("Multi select")),
     (RADIO_MULTIPLE, _("Radio buttons")),
     (FILE, _("File upload")),
-    (DATE, _("Date")),
-    (DATE_TIME, _("Date/time")),
-    (DOB, _("Date of birth")),
-    (HIDDEN, _("Hidden")),
 )
 
 # Field classes for all available field types.
@@ -65,6 +62,7 @@ CLASSES = {
     DOB: forms.DateField,
     HIDDEN: forms.CharField,
     NUMBER: forms.FloatField,
+    INTEGER: forms.IntegerField,
     URL: forms.URLField,
 }
 

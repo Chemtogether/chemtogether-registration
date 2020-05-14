@@ -10,9 +10,14 @@ from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import RequestContext
 from django.utils.http import urlquote
+from django.utils.html import format_html, format_html_join, mark_safe, escape, strip_tags
 from django.views.generic.base import TemplateView
 from django.contrib import messages
 from django.core.files import File
+from django.core.mail import EmailMessage
+from django.template import Context
+from django.template import Template
+from django import forms
 
 from .forms import FormForForm, FormEntry
 from .models import Form, STATUS_DRAFT, STATUS_PUBLISHED
@@ -169,4 +174,80 @@ class FormDetail(TemplateView):
 
 
     def send_emails(self, request, form_for_form, form, entry, attachments):
-        pass
+
+        if not form.send_email_to_company and not form.send_email_to_staff and not form.email_copies:
+            return
+
+        company = entry.author
+        username = entry.author.email
+        try:
+            staff = company.staff_user
+        except:
+            staff = None
+
+        to = []
+        if form.send_email_to_company:
+            to.append(company.email)
+        if form.send_email_to_staff and staff:
+            to.append(staff.email)
+        
+        subject = form.email_subject
+        template = Template(form.email_message)
+        context = Context({
+            'username': username,
+            'company': company,
+            'form_name': form.title,
+            'data': DataToEmailHTML(form, entry)
+        })
+        message = template.render(context)
+        email = EmailMessage(subject, message, to=to, bcc=[form.email_copies])
+        email.content_subtype = "html"
+        email.send()
+
+
+
+
+
+
+def compileFormData(form, entry):
+
+    data = []
+
+    for field in form.fields.all():
+        label = field.label
+
+
+        if field.is_a(fields.FILE):
+            value_type = "url"
+        elif field.is_a(fields.CHECKBOX):
+            value_type = "boolean"
+        else:
+            value_type = "text"
+            
+        value = entry.fields.filter(field_id=field.id).get().value
+        data.append({'label': label, 'value_type': value_type, 'value': value})
+    return data
+
+
+
+def DataToEmailHTML(form, entry):
+    data = compileFormData(form, entry)
+
+    html = "<table>\n"
+    for entry in data:
+        label = escape(entry['label'])
+        value = entry['value']
+        value_type = entry['value_type']
+
+        if value_type == "url":
+            formatted_value = format_html("<a href=/media/{}>{}</a>", value, os.path.basename(value))
+        elif value_type == "boolean":
+            formatted_value = format_html("{}", "Yes" if value == "True" else "No")
+        else:
+            formatted_value = format_html("{}", value).replace('\n', '<br>\n')
+
+        html += "<tr>\n<td><strong>%s</strong></td>\n<td>%s</td>\n</tr>\n\n" % (label, formatted_value)
+
+    html += "</table>"
+
+    return mark_safe(html)

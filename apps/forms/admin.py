@@ -26,7 +26,7 @@ fs = FileSystemStorage(location=UPLOAD_ROOT)
 form_admin_filter_horizontal = ()
 form_admin_fieldsets = [
     (None, {"fields": ("title", "slug", "status", ("publish_date", "expiry_date",), "intro", "description")}),
-    (_("Email"), {"fields": ("send_email_to_company", "send_email_to_staff", "email_copies", "email_subject", "email_message", "email_summary")}),]
+    (_("Email"), {"fields": ("send_email_to_company", "send_email_to_staff", "email_copies", "email_subject", "email_message")}),]
 
 class FieldAdmin(admin.TabularInline):
     model = Field
