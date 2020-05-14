@@ -63,7 +63,7 @@ class AbstractForm(models.Model):
     send_email_to_staff = models.BooleanField(_("Send email to staff"), default=True, help_text=_("If checked, the company's assigned staff will be sent an email upon submission of the company's form."))
     email_copies = models.CharField(_("Additional BCC addresses"), blank=True, help_text=_("One or more email addresses to be added as BCC recipients, separated by commas."), max_length=200)
     email_subject = models.CharField(_("Subject"), max_length=200, blank=True, help_text=_("Subject header of the email."))
-    email_message = models.TextField(_("Message"), blank=True, help_text=_("Body of the email. You can use/include {{username}} for the email address of the company, {{company}} for the name of the company, {{form_name}} for the name of the form and {{form_data}} for a summary of the submitted data."))
+    email_message = models.TextField(_("Message"), blank=True, help_text=_("Body of the email. You can use/include {{username}} for the email address of the company, {{company}} for the name of the company, {{form_name}} for the name of the form and {{data}} for a summary of the submitted data."))
 
     objects = FormManager()
 
