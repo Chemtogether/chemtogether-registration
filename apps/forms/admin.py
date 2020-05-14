@@ -30,7 +30,7 @@ form_admin_fieldsets = [
 
 class FieldAdmin(admin.TabularInline):
     model = Field
-    exclude = ('slug', 'visible')
+    exclude = ('slug', 'visible', 'order')
 
 
 class FormAdmin(admin.ModelAdmin):

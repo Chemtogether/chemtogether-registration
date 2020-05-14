@@ -61,9 +61,9 @@ class AbstractForm(models.Model):
     expiry_date = models.DateTimeField(_("Expires on"), help_text=_("With published selected, form won't be editable anymore after this time. Leave blank for unlimited time."), blank=True, null=True)
     send_email_to_company = models.BooleanField(_("Send email to company"), default=False, help_text=_("If checked, the company will be sent an email upon submission of their form."))
     send_email_to_staff = models.BooleanField(_("Send email to staff"), default=True, help_text=_("If checked, the company's assigned staff will be sent an email upon submission of the company's form."))
-    email_copies = models.CharField(_("Additional BCC addresses"), blank=True, help_text=_("One or more email addresses, separated by commas."), max_length=200)
+    email_copies = models.CharField(_("Additional BCC addresses"), blank=True, help_text=_("One or more email addresses to be added as BCC recipients, separated by commas."), max_length=200)
     email_subject = models.CharField(_("Subject"), max_length=200, blank=True, help_text=_("Subject header of the email."))
-    email_message = models.TextField(_("Message"), blank=True, help_text=_("Body of the email."))
+    email_message = models.TextField(_("Message"), blank=True, help_text=_("Body of the email. You can use/include {{username}} for the email address of the company, {{company}} for the name of the company, {{form_name}} for the name of the form and {{form_data}} for a summary of the submitted data."))
 
     objects = FormManager()
 
@@ -139,20 +139,20 @@ class AbstractField(models.Model):
     A field for a user-built form.
     """
 
-    label = models.CharField(_("Label"), max_length=settings.LABEL_MAX_LENGTH)
+    label = models.CharField(_("Label"), max_length=settings.LABEL_MAX_LENGTH, help_text="Name of this form field.")
     slug = models.SlugField(_('Slug'), max_length=2000, blank=True, default="")
     field_type = models.IntegerField(_("Type"), choices=fields.NAMES)
-    required = models.BooleanField(_("Required"), default=True)
+    required = models.BooleanField(_("Required"), default=True, help_text="If set, this form field must be filled.")
     visible = models.BooleanField(_("Visible"), default=True)
-    max_length = models.IntegerField(_("Max. chars"), blank=True, null=True)
+    max_length = models.IntegerField(_("Max. chars"), blank=True, null=True, help_text="If set, this is the maximum number of characters which are allowed for this form field.")
     choices = models.CharField(_("Choices"), max_length=settings.CHOICES_MAX_LENGTH, blank=True,
         help_text="Comma separated options where applicable. If an option "
             "itself contains commas, surround the option starting with the %s"
             "character and ending with the %s character." %
                 (settings.CHOICES_QUOTE, settings.CHOICES_UNQUOTE))
-    default = models.CharField(_("Default value"), blank=True, max_length=settings.FIELD_MAX_LENGTH)
-    placeholder_text = models.CharField(_("Placeholder Text"), null=True, blank=True, max_length=100, editable=settings.USE_HTML5)
-    help_text = models.CharField(_("Help text"), blank=True, max_length=settings.HELPTEXT_MAX_LENGTH)
+    default = models.CharField(_("Default value"), blank=True, max_length=settings.FIELD_MAX_LENGTH, help_text="Value entered in the form field by default. Leave empty for no default.")
+    placeholder_text = models.CharField(_("Placeholder Text"), null=True, blank=True, max_length=100, editable=settings.USE_HTML5, help_text="Text shown in the form field which will disappear when the form field is selected. Think 'Enter text here' or similar.")
+    help_text = models.CharField(_("Help text"), blank=True, max_length=settings.HELPTEXT_MAX_LENGTH, help_text="Text shown underneath the form field to describe what should be entered.")
 
     objects = FieldManager()
 
