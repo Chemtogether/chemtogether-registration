@@ -99,6 +99,9 @@ table .thead-dark th {
     background-color: red;
 }
 
+.form-group {
+    margin-bottom: 2em !important;
+}
 
 /*==================== 
 	Footer 
