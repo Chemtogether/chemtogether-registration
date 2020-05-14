@@ -228,6 +228,7 @@ def compileFormData(form, entry):
                 value_type = "text"
                 formatted_value = format_html("{}", value).replace('\n', '<br>').replace('\r', '')
         else:
+            value_type = "none"
             formatted_value = ""
             
         data.append({'label': label, 'value_type': value_type, 'value': value, 'formatted_value': formatted_value})
