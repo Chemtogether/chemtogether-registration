@@ -134,7 +134,7 @@ $(function() {
         <tr class="{% cycle "on" "off" %}">
             {% if can_delete_entries %}
             <td class="include">
-                <input type="checkbox" name="selected" value="{{ row.0 }}">
+                <input type="checkbox" name="selected" value="{{ entry.id }}">
             </td>
             {% endif %}
             <td>{{ entry.author }}</td>

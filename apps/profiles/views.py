@@ -10,6 +10,8 @@ from django.template.loader import render_to_string
 
 from .forms import ApplicationForm, RepresentativeForm, AssignStaffForm, AcceptCompanyForm
 from apps.accounts.models import User
+from apps.forms.models import Form, FormEntry
+from apps.forms.views import compileFormData
 from .models import Company, Representative
 
 logger = logging.getLogger("ct_registration.profiles.views")
@@ -294,7 +296,16 @@ def CompanyDetail(request, id):
 
         this_company = Company.objects.get(pk=id)
 
-        context = {'company': this_company, 'company_user': this_company.company_user, 'staff': this_company.staff_user}
+        form_data = []
+
+        for form in Form.objects.published().all().order_by("-publish_date", "-expiry_date"):
+            try:
+                form_entry = FormEntry.objects.filter(form=form).filter(author=this_company).get()
+                form_data.append({'form': form, 'form_entry': form_entry, 'form_data': compileFormData(form, form_entry)})
+            except:
+                form_data.append({'form': form, 'form_entry': None, 'form_data': None})
+
+        context = {'company': this_company, 'company_user': this_company.company_user, 'staff': this_company.staff_user, 'form_data': form_data}
 
         if request.user.is_staffmember_is_admin:
             if this_company.staff_user is None:

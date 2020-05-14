@@ -72,6 +72,11 @@
     width: 225px !important;
 }
 
+.companydetailtable td:nth-child(3) {
+    text-align: center;
+    width: 50px !important;
+}
+
 .companydetailadmintable td {
     width: 50% !important;
 }

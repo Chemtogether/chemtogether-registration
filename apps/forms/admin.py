@@ -121,6 +121,7 @@ class FormAdmin(admin.ModelAdmin):
             
             elif request.POST.get("delete") and can_delete_entries:
                 selected = request.POST.getlist("selected")
+                logger.debug(selected)
                 if selected:
                     try:
                         from django.contrib.messages import info

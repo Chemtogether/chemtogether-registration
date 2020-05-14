@@ -1,7 +1,12 @@
 {% extends 'main.html' %}
 {% load i18n %}
+{% load static %}
 
 {% load crispy_forms_tags %}
+
+{% block add_foot %}
+    <script src="{% static 'js/copytoclipboard.js' %}"></script>
+{% endblock add_foot %}
 
 {% block content_body %}
 
@@ -155,6 +160,86 @@
                 <td>{{ company.date_of_accepted_application }}</td>
             </tr>                     
         </tbody>
+    </table>
+</div>
+
+<br><br>
+
+<div class="table-responsive">
+    <table class="table companydetailtable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" colspan="2"><span style="font-size: 22px;">{% trans 'Form Responses' %}</span></th>
+            </tr>
+        </thead>
+        {% if form_data %}
+        <tbody>
+            <tr>
+                <td>
+                    {% for entry in form_data %}
+                        <div class="card mb-3">
+                            <div class="card-header" id="heading{{ forloop.counter }}">
+                                <div class="clearfix" style="font-weight: 700;">
+                                    {{ entry.form.title }}
+                                        {% if entry.form_entry and entry.form_entry.status == 1 %}
+                                            <div class="badge badge-warning float-right" style="font-size: 18px;">Draft</div>
+                                        {% elif entry.form_entry and entry.form_entry.status == 2 %}
+                                            <div class="badge badge-success float-right" style="font-size: 18px;">Submitted</div>
+                                        {% else %}
+                                            <div class="badge badge-danger float-right" style="font-size: 18px;">Incomplete</div>
+                                        {% endif %}
+                                </div>
+                                <br>
+                                <div class="clearfix">
+                                    {% if entry.form_entry %}
+                                        <button class="btn btn-primary" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}">
+                                            {% trans 'View Data' %}
+                                        </button>
+                                    {% endif %}
+                                    <span class="float-right text-muted" style="padding-top: 6px;">
+                                    {% if entry.form.expiry_date %}
+                                            Deadline: {{ entry.form.expiry_date|date:'l, d.m.y, H:i (T)' }}
+                                        {% else %}
+                                            No deadline
+                                        {% endif %}
+                                    </span>
+                                </div>
+
+                            </div>
+                            {% if entry.form_entry %}
+                                <div id="collapse{{ forloop.counter }}" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            {{ entry.form.description }}
+                                        </p>
+                                        <table class="table companydetailtable mb-0">
+                                            <tbody>
+                                                {% for field in entry.form_data%}
+                                                <tr>
+                                                    <th scope="row">{{ field.label }}</th>
+                                                    <td>{{ field.formatted_value|safe }}</td>
+                                                    <td>
+                                                        {% if field.value_type == 'url' %}
+                                                            <a target="_blank" href="/media/{{ field.value }}" class="btn btn-outline-primary">Download</a>
+                                                        {% else %}
+                                                            <button class="btn btn-outline-primary" onclick="copyToClipboard('{{field.formatted_value|safe}}')">Copy</button>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </td>
+            </tr>            
+        </tbody>
+        {% else %}
+            <tbody><tr><td>There are no forms to show.</td></tr></tbody>
+        {% endif %}
     </table>
 </div>
 

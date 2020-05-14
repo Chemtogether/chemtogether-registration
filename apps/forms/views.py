@@ -215,17 +215,22 @@ def compileFormData(form, entry):
 
     for field in form.fields.all():
         label = field.label
-
-
-        if field.is_a(fields.FILE):
-            value_type = "url"
-        elif field.is_a(fields.CHECKBOX):
-            value_type = "boolean"
-        else:
-            value_type = "text"
-            
         value = entry.fields.filter(field_id=field.id).get().value
-        data.append({'label': label, 'value_type': value_type, 'value': value})
+
+        if value:
+            if field.is_a(fields.FILE):
+                value_type = "url"
+                formatted_value = format_html("<a href='/media/{}'>{}</a>", value, os.path.basename(value))
+            elif field.is_a(fields.CHECKBOX):
+                value_type = "boolean"
+                formatted_value = format_html("{}", "Yes" if value == "True" else "No")
+            else:
+                value_type = "text"
+                formatted_value = format_html("{}", value).replace('\n', '<br>').replace('\r', '')
+        else:
+            formatted_value = ""
+            
+        data.append({'label': label, 'value_type': value_type, 'value': value, 'formatted_value': formatted_value})
     return data
 
 
@@ -233,20 +238,12 @@ def compileFormData(form, entry):
 def DataToEmailHTML(form, entry):
     data = compileFormData(form, entry)
 
-    html = "<table>\n"
+    html = '<table  width="100%" cellpadding="0" cellspacing="0" style="min-width:100%;max-width:100%;">\n'
     for entry in data:
         label = escape(entry['label'])
-        value = entry['value']
-        value_type = entry['value_type']
+        formatted_value = entry['formatted_value']
 
-        if value_type == "url":
-            formatted_value = format_html("<a href=/media/{}>{}</a>", value, os.path.basename(value))
-        elif value_type == "boolean":
-            formatted_value = format_html("{}", "Yes" if value == "True" else "No")
-        else:
-            formatted_value = format_html("{}", value).replace('\n', '<br>\n')
-
-        html += "<tr>\n<td><strong>%s</strong></td>\n<td>%s</td>\n</tr>\n\n" % (label, formatted_value)
+        html += '<tr>\n<td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><strong>%s</strong></td>\n<td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">%s</td>\n</tr>\n\n' % (label, formatted_value)
 
     html += "</table>"
 
