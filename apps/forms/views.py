@@ -146,7 +146,7 @@ class FormDetail(TemplateView):
             entry.save()
             
             form_valid.send(sender=request, form=form_for_form, entry=entry)
-            self.send_emails(request, form_for_form, form, entry, attachments)
+            if status == STATUS_PUBLISHED: self.send_emails(request, form_for_form, form, entry, attachments)
             if not self.request.is_ajax():
                 if status == STATUS_DRAFT:
                     messages.add_message(request, messages.INFO, 'Your form has been saved as a draft.')
@@ -220,7 +220,7 @@ def compileFormData(form, entry):
         if value:
             if field.is_a(fields.FILE):
                 value_type = "url"
-                formatted_value = format_html("<a href='/media/{}'>{}</a>", value, os.path.basename(value))
+                formatted_value = format_html("<a href='https://registration.chemtogether.ethz.ch/media/{}'>{}</a>", value, os.path.basename(value))
             elif field.is_a(fields.CHECKBOX):
                 value_type = "boolean"
                 formatted_value = format_html("{}", "Yes" if value == "True" else "No")
