@@ -345,6 +345,11 @@ def CompanyDetail_AssignStaffForm(request):
                 company = form.cleaned_data['company']
                 staff = form.cleaned_data['staff']
 
+                try:
+                    admin_user = request.user.profile.get()
+                except:
+                    admin_user = None
+
                 company.staff_user = staff
                 company.save()
                 messages.add_message(request, messages.INFO, 'Staff assignment was successful.')
@@ -352,7 +357,7 @@ def CompanyDetail_AssignStaffForm(request):
                 # Send mail to assigned staff
                 mail_subject = 'You have been assigned to company "%s"' % company.title
                 message = render_to_string('profiles/assignment_email.html', {
-                    'admin': request.user.profile.get(),
+                    'admin': admin_user,
                     'company': company,
                     'staff': staff,
                 })
