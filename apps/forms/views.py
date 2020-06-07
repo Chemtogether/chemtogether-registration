@@ -51,7 +51,11 @@ class FormDetail(TemplateView):
         if request.user.is_staffmember():
             messages.add_message(request, messages.INFO, 'You are logged in as a staff member. You may look at this form, but cannot submit it.')
 
-        status_published = bool(FormEntry.objects.filter(author=request.user.company.get()).filter(form=context['form']).filter(status=STATUS_PUBLISHED).all())
+        try:
+            status_published = bool(FormEntry.objects.filter(author=request.user.company.get()).filter(form=context['form']).filter(status=STATUS_PUBLISHED).all())
+        except:
+            status_published = False
+
         if context['form'].expiry_date:
             form_expired = timezone.now() > context['form'].expiry_date
             has_expiry = True
@@ -200,7 +204,8 @@ class FormDetail(TemplateView):
             'data': DataToEmailHTML(form, entry)
         })
         message = template.render(context)
-        email = EmailMessage(subject, message, to=to, bcc=[form.email_copies])
+        email = EmailMessage(subject, message.replace('\n', '<br>').replace('\r', ''), to=to, bcc=[form.email_copies])
+        logger.debug(message.replace('\n', '<br>').replace('\r', ''))
         email.content_subtype = "html"
         email.send()
 
@@ -239,7 +244,7 @@ def compileFormData(form, entry):
 def DataToEmailHTML(form, entry):
     data = compileFormData(form, entry)
 
-    html = '<table  width="100%" cellpadding="0" cellspacing="0" style="min-width:100%;max-width:100%;">\n'
+    html = '<table width="100%" cellpadding="0" cellspacing="0" style="min-width:100%;max-width:100%;">\n'
     for entry in data:
         label = escape(entry['label'])
         formatted_value = entry['formatted_value']
