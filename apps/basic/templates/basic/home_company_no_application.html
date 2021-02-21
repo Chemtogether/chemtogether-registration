@@ -18,12 +18,12 @@
 		{% endif %}
 		</h1>
     <p class="lead">		
-		{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries. This year´s Chemtogether will take place on the 3<sup>rd</sup> and 4<sup>th</sup> November 2020 on the G-floor of the HCI building on the ETH Hönggerberg campus.' %} 
+		{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries. This year´s Chemtogether will take place on the 2<sup>nd</sup> and 3<sup>rd</sup> November 2021 on the G-floor of the HCI building on the ETH Hönggerberg campus.' %} 
 		<br>
         {% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
-			{% trans 'The application process for exhibitors of Chemtogether 2020 is open.' %}
+			{% trans 'The application process for exhibitors of Chemtogether 2021 is open.' %}
 		{% else %}
-			{% trans 'The application process for exhibitors of Chemtogether 2020 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
+			{% trans 'The application process for exhibitors of Chemtogether 2021 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
         {% endif %}
     </p>
     <hr class="my-4">
