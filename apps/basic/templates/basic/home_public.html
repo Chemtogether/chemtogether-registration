@@ -11,23 +11,23 @@
 {% now "U" as current_time %}
 <div class="jumbotron bootstrap-override">
     <h1 class="display-6">
-		{% trans 'Chemtogether 2020: Company Registration' %}
+		{% trans 'Chemtogether 2021: Company Registration' %}
 	</h1>
     <p class="lead">
-		{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries. This year´s Chemtogether will take place on the 3<sup>rd</sup> and 4<sup>th</sup> November 2020 on the G-floor of the HCI building on the ETH Hönggerberg campus.' %}
+		{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries. This year´s Chemtogether will take place on the 2<sup>nd</sup> and 3<sup>rd</sup> November 2021 on the G-floor of the HCI building on the ETH Hönggerberg campus.' %}
 		<br>
         {% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
-			{% trans 'The application process for exhibitors of Chemtogether 2020 is open.' %}
+			{% trans 'The application process for exhibitors of Chemtogether 2021 is open.' %}
 		{% else %}
-			{% trans 'The application process for exhibitors of Chemtogether 2020 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
+			{% trans 'The application process for exhibitors of Chemtogether 2021 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
         {% endif %}
 	</p>
     <hr class="my-4">
     <p>
 		{% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
-			{% trans 'To start the application process for Chemtogether 2020, either sign up for an account or log into your existing account.' %}
+			{% trans 'To start the application process for Chemtogether 2021, either sign up for an account or log into your existing account.' %}
 		{% else %}
-			{% trans 'To be informed as soon as the application process for Chemtogether 2020 is started, you can already create an account that is required for the application.' %}
+			{% trans 'To be informed as soon as the application process for Chemtogether 2021 is started, you can already create an account that is required for the application.' %}
 		{% endif %}
 	</p>
     <p class="lead">
