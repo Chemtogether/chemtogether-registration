@@ -119,8 +119,8 @@ class Company(models.Model):
         choices =  (
             (0, _("Base Package")),
             (1, _("Silver Package")),
-            #(2, _("Gold Package")),
-            #(3, _("Platinum Package")),
+            (2, _("Gold Package")),
+            (3, _("Platinum Package")),
         ),
         help_text = _('Choice of package for your company.'),
     )
