@@ -9,7 +9,7 @@ isort==4.3.21
 lazy-object-proxy==1.5.0
 mccabe==0.6.1
 persisting-theory==0.2.1
-Pillow==7.1.2
+Pillow==8.1.1
 pylint==2.5.2
 python-gnupg==0.4.6
 python-slugify==4.0.0
