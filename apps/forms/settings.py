@@ -27,4 +27,4 @@ CSV_DELIMITER = ","
 HELPTEXT_MAX_LENGTH = 300
 
 # The maximum allowed length for field choices
-CHOICES_MAX_LENGTH = 1000
+CHOICES_MAX_LENGTH = 10000
