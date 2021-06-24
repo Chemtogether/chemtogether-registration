@@ -3,10 +3,10 @@ from __future__ import unicode_literals
 from django.conf import settings
 
 # The maximum allowed length for field values.
-FIELD_MAX_LENGTH = 10000
+FIELD_MAX_LENGTH = 1000000
 
 # The maximum allowed length for field labels.
-LABEL_MAX_LENGTH = 200
+LABEL_MAX_LENGTH = 20000
 
 # The absolute path where files will be uploaded to.
 UPLOAD_ROOT = None
