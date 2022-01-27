@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import RequestContext
-from django.utils.http import urlquote
+from urllib.parse import quote
 from django.utils.html import format_html, format_html_join, mark_safe, escape, strip_tags
 from django.views.generic.base import TemplateView
 from django.contrib import messages

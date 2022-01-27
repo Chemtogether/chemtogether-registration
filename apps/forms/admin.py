@@ -12,7 +12,7 @@ from django.urls import reverse, re_path
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.utils.translation import ungettext, ugettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 
 from .forms import EntriesForm
 from .models import Form, Field, FormEntry, FieldEntry

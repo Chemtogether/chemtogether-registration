@@ -10,7 +10,7 @@ from django.core.files.storage import default_storage
 from django.urls import reverse
 from django.template import Template
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from . import fields
 from .models import FormEntry, FieldEntry

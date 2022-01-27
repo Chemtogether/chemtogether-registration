@@ -9,6 +9,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ADMINS = [('Chemtogether Webmaster', 'webmaster@chemtogether.ethz.ch')]
 SERVER_EMAIL = 'registration.platform.django@chemtogether.ethz.ch'
 
+# Customizing type of auto-created primara keys
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Application definition
 INSTALLED_APPS = [
