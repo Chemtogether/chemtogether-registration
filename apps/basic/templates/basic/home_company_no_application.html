@@ -18,14 +18,14 @@
 		{% endif %}
 		</h1>
     <p class="lead">		
-		{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries. This year´s Chemtogether will take place on the 2<sup>nd</sup> and 3<sup>rd</sup> November 2021 on the G-floor of the HCI building on the ETH Hönggerberg campus.' %} 
+		{% trans 'Chemtogether is an annual career fair at ETH Zurich for companies in the chemical and pharmaceutical industries. This year´s Chemtogether will take place on the 8<sup>th</sup> and 9<sup>th</sup> November 2022 on the G-floor of the HCI building on the ETH Hönggerberg campus.' %} 
 		<br>
-		{% trans 'We are pleased to announce that, due to the current improvements of the pandemic situation, the Chemtogether Career Fair 2021 will be held in presence. However, to ensure the health of our company representatives and visitors, we have decided to grant access to the fair only to vaccinated, recovered, or tested people. We hope you will understand this measure and support us in our efforts to ensure the safest possible experience. We are looking forward to welcoming you all to this year’s Chemtogether!' %} 
+		{% trans 'Information regarding COVID-19: We are confident that the Chemtogether 2022 will again be held in presence. To ensure the health of our company representatives and visitors, we will adhere to the regulations imposed by the Federal Council and ETH Zürich. We hope you will understand this measure and support us in our efforts to ensure the safest possible experience. We are looking forward to welcoming you all to this year’s Chemtogether!' %} 
 		<br>
         {% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
-			{% trans 'The application process for exhibitors of Chemtogether 2021 is open.' %}
+			{% trans 'The application process for exhibitors of Chemtogether 2022 is open.' %}
 		{% else %}
-			{% trans 'The application process for exhibitors of Chemtogether 2021 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
+			{% trans 'The application process for exhibitors of Chemtogether 2022 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
         {% endif %}
     </p>
     <hr class="my-4">
