@@ -319,7 +319,7 @@ def CompanyDetail(request, id):
 
             if not this_company.company_user.is_company_is_accepted() and this_company.staff_user is not None:
                 context.update({
-                    'accept_company_form': AcceptCompanyForm(initial={'company': id}),
+                    'accept_company_form': AcceptCompanyForm(initial={'company': id, 'day': this_company.day, 'package': this_company.package}),
                 })
 
         return render(request, 'profiles/company_detail.html', context)
@@ -396,14 +396,22 @@ def CompanyDetail_AcceptCompanyForm(request):
 
                 company = form.cleaned_data['company']
                 check = form.cleaned_data['check']
+                package = int(form.cleaned_data['package'])
+                day = int(form.cleaned_data['day'])
 
                 if check == company.title:
                     if company.company_user.promote_to_accepted_company():
                         
                         staff = company.staff_user
 
+                        company.company_user.save()
+                        company.date_of_accepted_application = datetime.datetime.now()
+                        company.package = package
+                        company.day = day
+                        company.save()
+
                         # Send mail to assigned staff
-                        mail_subject = 'You have been assigned to company "%s"' % company.title
+                        mail_subject = '"%s" has been accepted to attend Chemtogether' % company.title
 
                         message = render_to_string('profiles/acceptedcompany_email.html', {
                             'company': company,
@@ -414,9 +422,7 @@ def CompanyDetail_AcceptCompanyForm(request):
                         )
                         email.send()
 
-                        company.company_user.save()
-                        company.date_of_accepted_application = datetime.datetime.now()
-                        company.save()
+
                         messages.add_message(request, messages.INFO, 'Company was successfully accepted and mail was sent.')
                         return redirect('profiles:companydetail', id=company.pk)
 

@@ -105,13 +105,23 @@ class Company(models.Model):
         help_text = _('Title of your company as it will be shown at the fair and in the fair material. Limited to 30 characters.'),
     )
 
+    day_choices = (
+        (1, _("Tuesday, November 8th")),
+        (2, _("Wednesday, November 9th"))
+    )
+        
+
     day = models.IntegerField(
         verbose_name = _('day of the fair'),
-        choices =  (
-            (1, _("Tuesday, November 2nd")),
-            (2, _("Wednesday, November 3rd")),
-        ),
+        choices =  day_choices,
         help_text = _('Day of the fair on which your company will attend.'),
+    )
+
+
+    flexible_day = models.BooleanField(
+        verbose_name = _('Our company is flexbile regarding the day of the fair'),
+        default = False,
+        help_text = _('Our company is flexbile regarding the day of the fair'),
     )
 
     package = models.IntegerField(
@@ -123,6 +133,13 @@ class Company(models.Model):
             (3, _("Platinum Package")),
         ),
         help_text = _('Choice of package for your company.'),
+    )
+
+
+    flexible_package = models.BooleanField(
+        verbose_name = _('Our company would also accept smaller packages than the chosen package'),
+        default = False,
+        help_text = _('Our company would also accept smaller packages than the chosen package'),
     )
 
     first_name = models.CharField(

@@ -1,4 +1,4 @@
-from django.forms import Form, ModelForm, ModelChoiceField, HiddenInput, CharField
+from django.forms import Form, ModelForm, ModelChoiceField, HiddenInput, CharField, ChoiceField
 from .models import Company, Representative
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
@@ -14,7 +14,7 @@ class ApplicationForm(ModelForm):
 
     class Meta:
         model = Company
-        fields = ['title', 'day', 'package', 'first_name', 'last_name', 'email', 'phone_number', 'language', 'mailing_address', 'billing_address', 'comments','accepts_tos']
+        fields = ['title', 'day', 'flexible_day','package', 'flexible_package', 'first_name', 'last_name', 'email', 'phone_number', 'language', 'mailing_address', 'billing_address', 'comments','accepts_tos']
 
 
 
@@ -56,10 +56,20 @@ class AcceptCompanyForm(Form):
         self.helper.add_input(Submit('submit', 'Accept Company'))
         self.helper.layout = Layout(
             'company',
+            'day',
+            'package',
             'check',
         )
 
     check = CharField(label = "Check: enter company name", required = True)
+    day = ChoiceField(label = "Select fair day", required = True, choices=((1, 'Tuesday'),(2, 'Wednesday')))
+    package = ChoiceField(label = "Select package", required = True, choices=(
+            (0, "Base"),
+            (1, "Silver"),
+            (2, "Gold"),
+            (3, "Platinum"),
+        )
+    )
     company = ModelChoiceField(queryset = Company.objects.all(), widget = HiddenInput(), required = True)
 
 

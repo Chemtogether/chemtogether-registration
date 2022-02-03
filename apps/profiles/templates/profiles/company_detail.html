@@ -92,8 +92,28 @@
                 <td>{{ company.get_day_display }}</td>
             </tr>
             <tr>
+                <th scope="row">{% trans 'Day Flexibility' %}</th>
+                <td>
+                    {% if company.flexible_day %}
+                        <i class="fas fa-check"></i>
+                    {% else %}
+                        <i class="fas fa-times"></i>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
                 <th scope="row">{% trans 'Package' %}</th>
                 <td>{{ company.get_package_display }}</td>
+            </tr>
+            <tr>
+                <th scope="row">{% trans 'Package Flexibility' %}</th>
+                <td>
+                    {% if company.flexible_package %}
+                        <i class="fas fa-check"></i>
+                    {% else %}
+                        <i class="fas fa-times"></i>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th scope="row">{% trans 'Contact: Name' %}</th>
