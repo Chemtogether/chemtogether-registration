@@ -119,9 +119,9 @@ class Company(models.Model):
 
 
     flexible_day = models.BooleanField(
-        verbose_name = _('Our company is flexbile regarding the day of the fair'),
+        verbose_name = _('Our company is flexible regarding the day of the fair'),
         default = False,
-        help_text = _('Our company is flexbile regarding the day of the fair'),
+        help_text = _('Our company is flexible regarding the day of the fair'),
     )
 
     package = models.IntegerField(
