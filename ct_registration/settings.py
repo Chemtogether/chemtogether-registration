@@ -165,13 +165,13 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console', 'mail_admins', 'file'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['mail_admins', 'file'],
             'level': 'ERROR',
-            'propagate': False,
+            'propagate': True,
         },
         'ct_registration': {
             'handlers': ['console', 'file', 'mail_admins'],
