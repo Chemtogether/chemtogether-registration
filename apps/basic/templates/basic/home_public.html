@@ -21,7 +21,7 @@
         {% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
 			{% trans 'The application process for exhibitors of Chemtogether 2022 is open.' %}
 		{% else %}
-			{% trans 'The application process for exhibitors of Chemtogether 2022 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
+			{% trans 'The application process for exhibitors of Chemtogether 2022 is closed. The application for Chemtogether 2023 will open on' %} {{ global_preferences.fair__applications_open_date|date:'d.m.Y' }}.
         {% endif %}
 	</p>
     <hr class="my-4">
@@ -29,7 +29,7 @@
 		{% if global_preferences.fair__applications_open_date|date:"U" < current_time %}
 			{% trans 'To start the application process for Chemtogether 2022, either sign up for an account or log into your existing account.' %}
 		{% else %}
-			{% trans 'To be informed as soon as the application process for Chemtogether 2022 is started, you can already create an account that is required for the application.' %}
+			{% trans 'To be informed as soon as the application process for Chemtogether 2023 is started, you can already create an account that is required for the application.' %}
 		{% endif %}
 	</p>
     <p class="lead">
