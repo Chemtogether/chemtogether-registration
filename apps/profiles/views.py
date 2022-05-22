@@ -266,17 +266,25 @@ def CompanyList(request):
         companies = Company.objects.all()
 
         for company in companies:
-            if company.company_user.is_company_is_accepted():
-                companies_accepted.append(company)
-            elif company.company_user.is_company_has_applied():
-                companies_applied.append(company)
-            elif company.company_user.is_company_has_not_applied():
-                messages.add_message(request, messages.WARNING, "The user corresponding to company %s has the wrong role." % company)
-                pass
-            else:
-                logger.exception("Company %s does not have a valid identifier: %s." % (company, company.company_user.role))
-                messages.add_message(request, messages.WARNING, "User %s does not have a valid identifier: %s." % (company, company.company_user.role))
-                pass
+
+            try:
+
+                if company.company_user.is_company_is_accepted():
+                    companies_accepted.append(company)
+                elif company.company_user.is_company_has_applied():
+                    companies_applied.append(company)
+                elif company.company_user.is_company_has_not_applied():
+                    messages.add_message(request, messages.WARNING, "The user corresponding to company %s has the wrong role." % company)
+                    pass
+                else:
+                    logger.exception("Company %s does not have a valid identifier: %s." % (company, company.company_user.role))
+                    messages.add_message(request, messages.WARNING, "User %s does not have a valid identifier: %s." % (company, company.company_user.role))
+                    pass
+            
+            except Exception as e:
+                logger.exception("Company %s is not valid: %s" % (company, e))
+                messages.add_message(request, messages.WARNING, "Company %s is not valid: %s" % (company, e))
+                continue
 
         context = {
             'companies_accepted': companies_accepted, 
