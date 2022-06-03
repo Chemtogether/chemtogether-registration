@@ -144,13 +144,13 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
         'file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR,'debug.log'),
             'formatter': 'verbose'
@@ -165,7 +165,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console', 'mail_admins', 'file'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
         'django.request': {
@@ -175,7 +175,7 @@ LOGGING = {
         },
         'ct_registration': {
             'handlers': ['console', 'file', 'mail_admins'],
-            'level': 'DEBUG',
+            'level': 'INFO',
         }
     }
 }

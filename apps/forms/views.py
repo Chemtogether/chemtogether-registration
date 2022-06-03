@@ -1,28 +1,20 @@
-import json
 import logging
 import os
 
 from django.utils import timezone
-from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.urls import reverse
-from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import RequestContext
-from urllib.parse import quote
-from django.utils.html import format_html, format_html_join, mark_safe, escape, strip_tags
+from django.utils.html import format_html, mark_safe, escape
 from django.views.generic.base import TemplateView
 from django.contrib import messages
-from django.core.files import File
 from django.core.mail import EmailMessage
 from django.template import Context
 from django.template import Template
-from django import forms
+
 
 from .forms import FormForForm, FormEntry
 from .models import Form, STATUS_DRAFT, STATUS_PUBLISHED
 from .signals import form_invalid, form_valid
-from .utils import split_choices
 from . import fields
 
 
@@ -151,12 +143,11 @@ class FormDetail(TemplateView):
             
             form_valid.send(sender=request, form=form_for_form, entry=entry)
             if status == STATUS_PUBLISHED: self.send_emails(request, form_for_form, form, entry, attachments)
-            if not self.request.is_ajax():
-                if status == STATUS_DRAFT:
-                    messages.add_message(request, messages.INFO, 'Your form has been saved as a draft.')
-                else:
-                    messages.add_message(request, messages.INFO, 'Your form has been submitted.')
-                return redirect('/')
+            if status == STATUS_DRAFT:
+                messages.add_message(request, messages.INFO, 'Your form has been saved as a draft.')
+            else:
+                messages.add_message(request, messages.INFO, 'Your form has been submitted.')
+            return redirect('/')
         
         context = {"form": form, "form_for_form": form_for_form}
         return self.render_to_response(context)
@@ -164,15 +155,8 @@ class FormDetail(TemplateView):
 
 
     def render_to_response(self, context, **kwargs):
-        if self.request.method == "POST" and self.request.is_ajax():
-            json_context = json.dumps({
-                "errors": context["form_for_form"].errors,
-                "form": context["form_for_form"].as_p(),
-                "message": context["form"].response,
-            })
-            if context["form_for_form"].errors:
-                return HttpResponseBadRequest(json_context, content_type="application/json")
-            return HttpResponse(json_context, content_type="application/json")
+        if self.request.method == "POST" and self.request.accepts("*/*"):
+            return render(self.request, self.template_name, context)
         return super(FormDetail, self).render_to_response(context, **kwargs)
 
 
