@@ -1,4 +1,4 @@
-Django==4.0.1
+Django==4.0.7
 django-cors-headers==3.10.1
 django-crispy-forms==1.13.0
 django-dynamic-preferences==1.11.0
