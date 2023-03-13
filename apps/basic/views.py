@@ -15,6 +15,10 @@ def index(request):
     context = {
         'title': 'Home'
     }
+    
+    return render(request, 'basic/home_deactivated.html', context=context)
+    
+    # STOP HERE! Deactivating website to switch to new tool.
 
     if not request.user.is_authenticated:   
         return render(request, 'basic/home_public.html', context=context)
